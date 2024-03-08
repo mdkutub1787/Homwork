@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+
+<body>
+
+
+    <label for="">Mark</label>
+    <input type="text" id="mark"><br>
+
+    <input type="submit" value="Check" onclick="findResult()">
+
+    <p id="result">Result</p>
+
+    <script>
+
+        function findResult() {
+            let userInput = document.getElementById("mark").value;
+            let grade = "";
+
+            if (userInput <= 32) {
+                grade = "Fail";
+            }
+
+            else if (userInput <= 100) {
+                grade = "Pass";
+            }
+            else {
+                alert("Invalied Number");
+            }
+
+            document.getElementById('result').innerHTML = grade
+
+        }
+    </script>
+
+</body>
+
+</html>

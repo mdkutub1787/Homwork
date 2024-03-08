@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <label>Number1</label>
+    <input type="number" id="number1"> <br>
+
+    <label>Number2</label>
+    <input type="number" id="number2"> <br>
+
+    <input type="submit" value="Sum" onclick="doSum()">
+    <input type="submit" value="Sub" onclick="doSub()">
+    <input type="submit" value="Div" onclick="doDiv()">
+    <input type="submit" value="Mul" onclick="doMul()">
+
+
+    <script>
+        function doSum() {
+            let number1 = document.getElementById('number1').value;
+            let number2 = document.getElementById('number2').value;
+
+            let nu1ToInt = parseFloat(number1);
+            let nu2ToInt = parseFloat(number2);
+
+            let result = nu1ToInt + nu2ToInt;
+
+            document.write(result);
+        }
+           
+
+        function doSub() {
+            let number1 = document.getElementById('number1').value;
+            let number2 = document.getElementById('number2').value;
+
+            let nu1ToInt = parseFloat(number1);
+            let nu2ToInt = parseFloat(number2);
+
+            let result = nu1ToInt - nu2ToInt;
+
+            document.write(result);
+        }
+
+        
+        function doDiv() {
+            let number1 = document.getElementById('number1').value;
+            let number2 = document.getElementById('number2').value;
+
+            let nu1ToInt = parseFloat(number1);
+            let nu2ToInt = parseFloat(number2);
+
+            let result = nu1ToInt / nu2ToInt;
+
+            document.write(result);
+        }
+
+        
+        function doMul() {
+            let number1 = document.getElementById('number1').value;
+            let number2 = document.getElementById('number2').value;
+
+            let nu1ToInt = parseFloat(number1);
+            let nu2ToInt = parseFloat(number2);
+
+            let result = nu1ToInt * nu2ToInt;
+
+            document.write(result);
+        }
+    </script>
+
+</body>
+
+</html>
