@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>max min</title>
+</head>
+<body>
+    <script>
+        let number1=prompt("Enter first number");
+        let number2=prompt("Enter second number");
+        let number3=prompt("Enter third number");
+        maxNumber=0;
+        minNumber=0;
+        if(number1>number2 && number1>number3){
+            maxNumber=number1;
+
+        }
+        else if(number2>number1 && number2>number3){
+            maxNumber=number2;
+        }
+        else{
+            maxNumber=number3;
+        }
+
+        if(number1<number2 && number1<number3){
+            minNumber=number1;
+
+        }
+        else if(number2<number1 && number2<number3){
+            minNumber=number2;
+        }
+        else{
+            minNumber=number3;
+        }
+
+        document.write("Max Number= "+ maxNumber +"<br>");
+        document.write("Min Number= "+ minNumber);
+    </script>
+</body>
+</html>

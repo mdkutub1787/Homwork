@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bubble short</title>
+</head>
+
+<body>
+    <script>
+        let myAr = [20, 40, 10, 30, 50, 80];
+        document.write("Old Number  =  " + myAr +"<br>");
+
+        for (first = 0; first < myAr.length; first++) {
+            for (second = 0; second < myAr.length - first - 1; second++) {
+
+                if (myAr[second] > myAr[second + 1]) {
+                    let temt = myAr[second];
+                    myAr[second] = myAr[second + 1];
+                    myAr[second + 1] = temt;
+
+                }
+            }
+
+        }
+        document.write("New Number  =  " + myAr);
+
+    </script>
+</body>
+
+</html>

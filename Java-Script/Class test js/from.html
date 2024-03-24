@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form </title>
+</head>
+
+<body>
+    <form id="myForm">
+        <label for="">Name</label> <br>
+        <input type="text" name="" id="name"> <br>
+
+        <label for="">Contact</label> <br>
+        <input type="number" name="" id="contact"> <br>
+
+        <label for="">Remarks</label> <br>
+        <textarea name="" id="remarks" cols="21" rows="3"></textarea> <br>
+
+        <label for="">gender</label> <br>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Fmaale"> Fmaale <br>
+
+        <label for="">Courses</label> <br>
+        <input type="radio" name="courses" value="JEE"> JEE
+        <input type="radio" name="courses" value="NT"> NT
+        <input type="radio" name="courses" value="DDD"> DDD
+        <input type="radio" name="courses" value="IAS"> IAS <br>
+
+
+        <label for="">Location</label> <br>
+        <select name="" id="location">
+            <option selected>Select One</option>
+            <option value="Dhanmondi">Dhanmondi</option>
+            <option value="Mirpur">Mirpur</option>
+            <option value="Banani">Banani</option>
+        </select> <br>
+
+        <input type="submit" name="" value="submit" onclick="submitForm()">
+
+    </form>
+
+    <script>
+        function submitForm() {
+            event.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let contact = document.getElementById('contact').value;
+            let remarks = document.getElementById('remarks').value;
+            let location = document.getElementById('location').value;
+            let gender = document.querySelector('input[name="gender"]:checked').value;
+            let courses = document.querySelectorAll('input[name="courses"]:checked');
+            let coursesValue=[];
+            for(let i=0;i<courses.length;i++){
+                coursesValue.push(courses[i].value);
+            }
+            
+
+            let output = "Name:" + name + "\n";
+            output += "Contact:" + contact + "\n";
+            output += "Remarks:" + remarks + "\n";
+            output += "location:" + location + "\n";
+            output += "gender:" + gender + "\n";
+            output += "courses:" + coursesValue + "\n";
+
+            let newWindow = window.open("", ('_blank'));
+            newWindow.document.write("<pre>" + output + "</pre>");
+
+        }
+
+
+    </script>
+</body>
+
+</html>
