@@ -1,6 +1,4 @@
-
-export class Student {
-
+export class Location {
     id: string | undefined;
     name: string | undefined;
     city: string | undefined;
@@ -9,6 +7,4 @@ export class Student {
     availableUnits: number | undefined;
     wifi: boolean | undefined;
     laundry: boolean | undefined;
-
-
 }

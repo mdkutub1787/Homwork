@@ -1,0 +1,20 @@
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Action</th>
+        </tr>
+        <tr *ngFor="let location of locations |async">
+            <td>{{location.name}}</td>
+            <td>{{location.city}}</td>
+            <td>
+                <button class="btn btn-warning">Edit</button>
+                <button class="btn btn-danger" (click)="deleteLocation(location.id)">Delete</button>
+            </td>
+        </tr>
+
+
+    </table>
+
+</div>
