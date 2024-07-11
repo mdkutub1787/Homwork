@@ -50,6 +50,7 @@ export class CreatelocationComponent implements OnInit {
 
 
   this.locationService.creteLocation(this.location)
+  .subscribe
   }
 
 }

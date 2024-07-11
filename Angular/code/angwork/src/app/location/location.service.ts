@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Location } from './location.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class LocationService {
 
   }
 
-  creteLocation(): Observable<any> {
-    return this.httpClient.post(this.baseUrl, location);
+  creteLocation(location:Location): Observable<any> {
+    return this.httpClient.post(this.baseUrl,location);
 
   }
 }
