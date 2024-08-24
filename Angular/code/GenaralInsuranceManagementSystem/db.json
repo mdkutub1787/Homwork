@@ -104,7 +104,7 @@
       "bankName": "Brack Bank PLC,dhaka branch",
       "policyholder": "M/s Rizvi agro firm , prop: Rezvi chowdhory  ",
       "address": "lalbagh Roard , Lalabagh Dhaka 1203",
-      "sumInsured": 800000,
+      "sumInsured": 80000,
       "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
       "interestInsured": "Cosmetics and Others",
       "coverage": "Fire &/or Lightning only",
@@ -160,6 +160,26 @@
         "interestInsured": "Cosmetics and Others",
         "usedAs": "Shop-Cum-Godwon Only"
       }
+    },
+    {
+      "id": "1104",
+      "fire": 0.01,
+      "rsd": 0.01,
+      "tax": 0.015,
+      "policies": {
+        "id": null,
+        "billNo": null,
+        "date": null,
+        "bankName": null,
+        "policyholder": "M/s Sanaullah agro firm , prop: Sanaullah chowdhory  ",
+        "address": "lalbagh Roard , Lalabagh Dhaka 1203",
+        "sumInsured": 50000,
+        "stockInsured": null,
+        "interestInsured": null,
+        "usedAs": null
+      },
+      "netPremium": 1000,
+      "grossPremium": 1010
     }
   ],
   "reciept": [
@@ -172,7 +192,7 @@
         "tax": 0.15,
         "grossPremium": 20000,
         "policies": {
-          "billNo": 11,
+          "billNo": 111,
           "date": "2024-08-01",
           "bankName": "Brack Bank PLC,dhaka branch",
           "policyholder": "M/s Raju Food Corner , Prop: Md. Raju Chowdhury  ",
@@ -189,6 +209,7 @@
           "periodTo": "2025-08-02"
         }
       }
+    
     }
   ]
 }
