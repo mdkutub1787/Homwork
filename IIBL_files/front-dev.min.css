@@ -1,0 +1,431 @@
+/* #breadcrumb::after {
+    content: "";
+    position: absolute;
+    background: #ff000040;
+    height: 25rem;
+    width: 100%;
+    padding-left: 0 !important;
+} */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Merriweather", sans-serif;
+    color: #27734b;
+}
+
+.slider_image {
+    height: 635px;
+    background-image: url("../img/landing_page/1.marine.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: slide_image 40s infinite;
+}
+
+@keyframes slide_image {
+    0% {
+        background-image: url("../img/landing_page/1.marine.jpg");
+    }
+    33% {
+        background-image: url("../img/landing_page/2.motor-insurence.jpg");
+    }
+    67% {
+        background-image: url("../img/landing_page/3.fire.jpg");
+    }
+}
+
+#breadcrumb .after_crumb {
+    position: absolute;
+    height: inherit;
+    background: linear-gradient( 100deg, rgb(21 65 42) 0%, rgb(84 207 150 / 6%) 100%);
+    width: 100%;
+}
+
+
+/*#breadcrumb > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 0;
+} */
+
+.nav_edit {
+    /* padding: .1rem 5rem; */
+    padding: 0;
+    padding-top: 5px;
+    position: fixed;
+}
+
+.before_nav_edit {
+    height: 123px;
+}
+
+.header_logo_repo {
+    width: 100%;
+    display: none;
+}
+
+.logo_img_rep {
+    height: 65px;
+    width: 65px;
+    display: none;
+}
+
+.slider_image:before {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    content: "";
+}
+
+
+/* top area slider image */
+
+
+/* aboutus */
+
+.bread_about_glance {
+    background-image: url(../img/DivisionalCoverImages/OurStory/at-a-glacne.jpg) !important;
+}
+
+.bread_about_corporate {
+    background-image: url(../img/DivisionalCoverImages/OurStory/key-coroprate-.jpg) !important;
+}
+
+.bread_about_chairman {
+    background-image: url(../img/DivisionalCoverImages/OurStory/Message-from-Chairman.jpg) !important;
+}
+
+.bread_about_ceo {
+    background-image: url(../img/DivisionalCoverImages/OurStory/mssg-CEO.jpg) !important;
+}
+
+.bread_about_clients {
+    background-image: url(../img/DivisionalCoverImages/OurStory/valid-client.jpg) !important;
+}
+
+
+/* organization structure */
+
+.bread_organization_direc {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/ZBoard-of-directors.jpg) !important;
+}
+
+.bread_organization_executive {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/executive.jpg) !important;
+}
+
+.bread_organization_nomination {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/Nomination.jpg) !important;
+}
+
+.bread_organization_claim {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/claim.jpg) !important;
+}
+
+.bread_organization_audit {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/audit-comitee.jpg) !important;
+}
+
+.bread_organization_council {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/shariah-law-comittee.jpg) !important;
+}
+
+.bread_organization_senior {
+    background-image: url(../img/DivisionalCoverImages/organizationalStructure/senior-managment.jpg) !important;
+}
+
+
+/* financial indicator */
+
+.bread_financ_sharholder {
+    background-image: url(../img/new_edit/financ/sharholder.jpg) !important;
+}
+
+.bread_financ_credit {
+    background-image: url(../img/new_edit/financ/credit-rating.jpg) !important;
+}
+
+.bread_financ_value {
+    background-image: url(../img/new_edit/financ/value-added.jpg) !important;
+}
+
+.bread_financ_director {
+    background-image: url(../img/new_edit/financ/Directors-report.jpg) !important;
+}
+
+.bread_financ_governanc {
+    background-image: url(../img/new_edit/financ/corporate-governance.jpg) !important;
+}
+
+.bread_financ_highlight {
+    background-image: url(../img/new_edit/financ/financial-highlights.jpg) !important;
+}
+
+.bread_financ_qreport {
+    background-image: url(../img/new_edit/financ/QReport.jpg) !important;
+}
+
+.bread_financ_price {
+    background-image: url(../img/new_edit/financ/price.jpg) !important;
+}
+
+.bread_financ_areport {
+    background-image: url(../img/new_edit/financ/Areport.jpg) !important;
+}
+
+
+/* product */
+
+.bread_prduct_fire {
+    background-image: url(../img/products/insurance_img/Fire_Insurance_3.jpeg) !important;
+}
+
+.bread_prduct_marine {
+    background-image: url(../img/products/insurance_img/Marine_Hull_Insurance_2.jpeg) !important;
+}
+
+.bread_prduct_motor {
+    background-image: url(../img/products/car.jpeg) !important;
+}
+
+.bread_prduct_engineer {
+    background-image: url(../img/products/insurance_img/Engineering_Insurance.jpeg) !important;
+}
+
+.bread_prduct_misaliinous {
+    background-image: url(../img/products/insurance_img/Miscellaneous_Insurance.jpeg) !important;
+}
+
+
+/* media */
+
+.bread_media_news {
+    background-image: url(../img/DivisionalCoverImages/media/news.jpg) !important;
+}
+
+.bread_media_blog {
+    background-image: url(../img/DivisionalCoverImages/media/blogs.jpg) !important;
+}
+
+.bread_media_award {
+    background-image: url(../img/DivisionalCoverImages/media/award.jpg) !important;
+}
+
+.bread_media_audio {
+    background-image: url(../img/DivisionalCoverImages/media/audio-visual.jpg) !important;
+}
+
+.bread_media_mojib {
+    background-image: url(../img/DivisionalCoverImages/media/mujib-corner.jpg) !important;
+}
+
+
+/* download */
+
+.bread_download {
+    background-image: url(../img/DivisionalCoverImages/Download/download.jpg) !important;
+}
+
+
+/* career */
+
+.bread_career_vacancy {
+    background-image: url(../img/DivisionalCoverImages/career/career.jpg) !important;
+}
+
+.bread_career_resume {
+    background-image: url(../img/DivisionalCoverImages/career/resume.jpg) !important;
+}
+
+
+/* digital insurance */
+
+.bread_digital_travel {
+    background-image: url(../img/new_edit/digital/tarvel.jpg) !important;
+}
+
+.bread_digital_personal {
+    background-image: url(../img/new_edit/digital/personal-accident.jpg) !important;
+}
+
+.bread_digital_motor {
+    background-image: url(../img/DivisionalCoverImages/DigitalPatment/motor.jpeg) !important;
+}
+
+.bread_digital_fire {
+    background-image: url(../img/DivisionalCoverImages/DigitalPatment/ambu.jpg) !important;
+}
+
+.bread_digital_marine {
+    background-image: url(../img/DivisionalCoverImages/DigitalPatment/ZMarine.jpg) !important;
+}
+
+
+/* contact */
+
+.bread_contact01 {
+    background-image: url(../img/DivisionalCoverImages/contactUs/14.jpg) !important;
+}
+
+.bread_contact02 {
+    background-image: url(../img/DivisionalCoverImages/contactUs/14.jpg) !important;
+}
+
+.bread_contact_head {
+    background-image: url(../img/DivisionalCoverImages/contactUs/14.jpg) !important;
+}
+
+.bread_contact_book {
+    background-image: url(../img/DivisionalCoverImages/contactUs/2.jpg) !important;
+}
+
+.value_img {
+    padding: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.value_img img {
+    padding: 20px;
+    height: 150px;
+}
+
+@media (max-width: 768px) {
+    .value_img img {
+        padding: 20px;
+        height: auto;
+    }
+}
+
+.value_img h4 {
+    font-size: 20px;
+    margin-top: -10px;
+}
+
+.from_res {
+    flex: 0 0 230px;
+}
+
+.from_res2 {
+    flex: 0 0 130px;
+}
+
+div#collapsibleNavbar {
+    justify-content: center;
+}
+
+ul.pagination {
+    justify-content: center;
+}
+
+.img-thumbnail {
+    padding: 0rem !important;
+}
+
+.footer .first_item {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.main_contant {
+    border: 1px solid black;
+    padding: 17px;
+}
+
+.image_contant {
+    width: 32%;
+}
+
+.contant_left {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.image_contant img {
+    width: 115px;
+    height: auto;
+    margin-top: -20px;
+}
+
+.main_contant h5 {
+    font-size: 17px;
+    color: black;
+    font-weight: 600;
+}
+
+.main_contant h4 {
+    color: black;
+    font-size: 25px;
+    font-weight: 700;
+    /* margin-bottom: 20px; */
+}
+
+.item_list_2 span {
+    display: none;
+}
+
+.item_list {
+    margin-right: 1rem;
+}
+
+@media (max-width: 600px) {
+    .footer .first_item {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .main_contant h5 {
+        font-size: 15px;
+    }
+    .main_contant h4 {
+        font-size: 20px;
+    }
+    .image_contant {
+        width: 30%;
+    }
+}
+
+@media (max-width: 480px) {
+    .main_contant h4 {
+        font-size: 17px;
+    }
+    .main_contant h5 {
+        font-size: 13px;
+    }
+    .image_contant img {
+        margin-top: 10px;
+    }
+    .image_contant {
+        width: 22%;
+    }
+}
+
+@media (max-width: 360px) {
+    .image_contant img {
+        width: 85px;
+    }
+    .main_contant {
+        padding: 11px;
+    }
+    .image_contant {
+        width: 23%;
+    }
+    .col-lg-10 {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+    .item_list {
+        display: none;
+    }
+    .item_list_2 span {
+        display: contents;
+    }
+}
