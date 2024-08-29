@@ -23,6 +23,7 @@ export class CreaterecieptComponent implements OnInit {
   bill: BillModel[] = [];
   reciept: ReceiptModel = new ReceiptModel();
   receiptForm!: FormGroup;
+  selectedBill?: BillModel;
 
 
 
@@ -35,24 +36,23 @@ export class CreaterecieptComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const currentDate = new Date().toISOString().substring(0, 10); // Format as YYYY-MM-DD
+    // const currentDate = new Date().toISOString().substring(0, 10); // Format as YYYY-MM-DD
     this.loadPolicies();
     this.loadBills();
 
     this.receiptForm = this.formBuilder.group({
       id: [''],
-
       bill: this.formBuilder.group({
-        fire: [{ value: '', }],
-        rsd: [{ value: '', }],
-        netPremium: [{ value: '', }], // Disable to prevent manual editing
-        tax:[{ value: '', }],
-        grossPremium: [{ value: ''  }], // Disable to prevent manual editing
+        fire: [undefined],
+        rsd: [undefined],
+        netPremium: [undefined],
+        tax: [undefined],
+        grossPremium: [undefined],
 
         policies: this.formBuilder.group({
           id: [undefined],
           billNo: [undefined],
-          date: [currentDate],
+          date: [undefined],
           bankName: [undefined],
           policyholder: [undefined],
           address: [undefined],
@@ -64,41 +64,48 @@ export class CreaterecieptComponent implements OnInit {
           construction: [undefined],
           owner: [undefined],
           usedAs: [undefined],
-          periodFrom: ['value', Validators.required],
-          periodTo: [{ value: '', disabled: true }]
+          periodFrom: [undefined],
+          periodTo: [undefined],
         })
       })
     });
 
-    this.receiptForm.get('periodFrom')?.valueChanges.subscribe(value => {
-      if (value) {
-        const periodFromDate = new Date(value);
-        const periodToDate = new Date(periodFromDate);
-        periodToDate.setFullYear(periodFromDate.getFullYear() + 1);
-        this.receiptForm.patchValue({
-          periodTo: periodToDate.toISOString().substring(0, 10) // Format as YYYY-MM-DD
-        }, { emitEvent: false });
-      }
-    });
+    // this.receiptForm.get('periodFrom')?.valueChanges.subscribe(value => {
+    //   if (value) {
+    //     const periodFromDate = new Date(value);
+    //     const periodToDate = new Date(periodFromDate);
+    //     periodToDate.setFullYear(periodFromDate.getFullYear() + 1);
+    //     this.receiptForm.patchValue({
+    //       periodTo: periodToDate.toISOString().substring(0, 10) // Format as YYYY-MM-DD
+    //     }, { emitEvent: false });
+    //   }
+    // });
 
     this.receiptForm.get('bill.policies.policyholder')?.valueChanges
-    .subscribe(policyholder => {
-      const selectedPolicy = this.bill.find(bill => bill.policies.policyholder === policyholder);
-      if (selectedPolicy) {
-        this.receiptForm.patchValue({
-          bill: {
-            ...this.receiptForm.get('bill')?.value,
-            policies: selectedPolicy.policies
-          }
-        });
-        this.calculatePremiums(); // Recalculate premiums when policyholder changes
-      }
-    });
-  
+      .subscribe(policyholder => {
+        this.selectedBill = this.bill.find(bill => bill.policies.policyholder === policyholder);
+        console.log(this.selectedBill);
+        if (this.selectedBill) {
+          this.receiptForm.patchValue({
+            bill: {
+              ...this.receiptForm.get('bill')?.value,
+              fire: this.selectedBill.fire,
+              rsd: this.selectedBill.rsd,
+              netPremium: this.selectedBill.netPremium,
+              tax: this.selectedBill.tax,
+              grossPremium: this.selectedBill.grossPremium,
+              policies: this.selectedBill.policies
+            }
+          }, { emitEvent: false });
+          // this.calculatePremiums(); 
+        }
+      });
+
+
     // Recalculate premiums when fire, rsd, or tax values change
-    this.billForm.get('fire')?.valueChanges.subscribe(() => this.calculatePremiums());
-    this.billForm.get('rsd')?.valueChanges.subscribe(() => this.calculatePremiums());
-    this.billForm.get('tax')?.valueChanges.subscribe(() => this.calculatePremiums());
+    // this.billForm.get('fire')?.valueChanges.subscribe(() => this.calculatePremiums());
+    // this.billForm.get('rsd')?.valueChanges.subscribe(() => this.calculatePremiums());
+    // this.billForm.get('tax')?.valueChanges.subscribe(() => this.calculatePremiums());
 
 
   }
@@ -108,6 +115,7 @@ export class CreaterecieptComponent implements OnInit {
       .subscribe({
         next: res => {
           this.policies = res;
+          console.log(this.policies)
         },
         error: error => {
           console.error('Error loading policies:', error);
@@ -127,33 +135,33 @@ export class CreaterecieptComponent implements OnInit {
       });
   }
 
-  calculatePremiums(): void {
-    const fire = this.receiptForm.get('bill.fire')?.value || 0;
-    const rsd = this.receiptForm.get('bill.rsd')?.value || 0;
-    const tax = this.receiptForm.get('bill.tax')?.value || 0;
+  // calculatePremiums(): void {
+  //   const fire = this.receiptForm.get('bill.fire')?.value || 0;
+  //   const rsd = this.receiptForm.get('bill.rsd')?.value || 0;
+  //   const tax = this.receiptForm.get('bill.tax')?.value || 0;
 
-    const netPremium = fire + rsd;
-    const grossPremium = netPremium + tax;
+  //   const netPremium = fire + rsd;
+  //   const grossPremium = netPremium + tax;
 
-    this.receiptForm.patchValue({
-      bill: {
-        netPremium: netPremium.toFixed(2),
-        grossPremium: grossPremium.toFixed(2)
-      }
-    });
-  }
+  //   this.receiptForm.patchValue({
+  //     bill: {
+  //       netPremium: netPremium.toFixed(2),
+  //       grossPremium: grossPremium.toFixed(2)
+  //     }
+  //   });
+  // }
 
   createReceipt(): void {
     if (this.receiptForm.valid) {
       const formValues = this.receiptForm.value;
-      this.reciept.bill = formValues.bill; // Correct assignment
-      this.recieptService.createReciept(this.reciept) // Corrected method name
+      this.reciept.bill = formValues.bill;
+      this.recieptService.createReciept(this.reciept)
         .subscribe({
           next: res => {
             this.loadPolicies();
             this.loadBills();
             this.receiptForm.reset();
-            this.router.navigate(['viewreceipt']); // Corrected route
+            this.router.navigate(['viewreciept']);
           },
           error: error => {
             console.error('Error creating receipt:', error);

@@ -32,9 +32,9 @@ export class CreatebillComponent {
     this.billForm = this.formBuilder.group({
       fire: [''],
       rsd: [''],
-      netPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
+      netPremium: [{ value: '' }], // Disable to prevent manual editing
       tax: [''],
-      grossPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
+      grossPremium: [{ value: '' }], // Disable to prevent manual editing
       policies: this.formBuilder.group({
         id: [undefined],
         billNo: [undefined],
@@ -51,7 +51,7 @@ export class CreatebillComponent {
         owner: [undefined],
         usedAs: [undefined],
         periodFrom: ['', Validators.required],
-        periodTo: [{ value: '', disabled: true }]
+        periodTo: [{ value: '' }]
       })
     });
 
