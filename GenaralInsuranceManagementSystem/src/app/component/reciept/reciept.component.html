@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt Page</title>
+
+ 
+
+</head>
+<body>
+
+  <!-- Create Receipt Button aligned to the right -->
+  <div class="container mt-3">
+    <div class="d-flex justify-content-end mb-3">
+      <button type="button" class="btn btn-primary no-print" (click)="navigateToAddReciept()">
+        <i class="fas fa-plus"></i> <!-- Font Awesome icon for "add" -->
+        Create Receipt
+      </button>
+    </div>
+
+    <!-- Print Section -->
+    <div id="print-section">
+      <div class="avatar-container">
+        <!-- Small Image Centered -->
+        <img class="avatar-small" src="https://i.postimg.cc/SxVwPyGz/download.jpg" alt="User Admin" />
+      </div>
+
+      <!-- Bill Information Card -->
+      <div class="card mb-3">
+        <div class="card-header text-center">Bill Information</div>
+        <div class="card-body">
+          <p><strong>Bill No:</strong> {{ receipts[0]?.bill.policies.billNo }}</p>
+          <p><strong>Date:</strong> {{ receipts[0]?.bill.policies.date | date }}</p>
+        </div>
+      </div>
+
+      <!-- Insured Details Card -->
+      <div class="card mb-3">
+        <div class="card-header text-center">Insured Details</div>
+        <div class="card-body">
+          <p><strong>Bank Name:</strong> {{ receipts[0]?.bill.policies.bankName }}</p>
+          <p><strong>Policyholder:</strong> {{ receipts[0]?.bill.policies.policyholder }}</p>
+          <p><strong>Address:</strong> {{ receipts[0]?.bill.policies.address }}</p>
+        </div>
+      </div>
+
+      <!-- Segregation of The Sum Insured Card -->
+      <div class="card mb-3">
+        <div class="card-header text-center">Segregation of The Sum Insured</div>
+        <div class="card-body">
+          <p><strong>Stock Insured:</strong> {{ receipts[0]?.bill.policies.stockInsured }}</p>
+          <p><strong>Sum Insured:</strong> {{ receipts[0]?.bill.policies.sumInsured | currency: 'TK': 'symbol': '1.0-0' }}</p>
+        </div>
+      </div>
+
+      <!-- Situation Card -->
+      <div class="card mb-3">
+        <div class="card-header text-center">Situation</div>
+        <div class="card-body">
+          <p><strong>Interest Insured:</strong> {{ receipts[0]?.bill.policies.interestInsured }}</p>
+          <p><strong>Coverage:</strong> {{ receipts[0]?.bill.policies.coverage }}</p>
+          <p><strong>Location:</strong> {{ receipts[0]?.bill.policies.location }}</p>
+          <p><strong>Construction:</strong> {{ receipts[0]?.bill.policies.construction }}</p>
+          <p><strong>Owner:</strong> {{ receipts[0]?.bill.policies.owner }}</p>
+          <p><strong>Used As:</strong> {{ receipts[0]?.bill.policies.usedAs }}</p>
+        </div>
+      </div>
+
+      <!-- Period Card -->
+      <div class="card mb-3">
+        <div class="card-header text-center">Period</div>
+        <div class="card-body">
+          <p><strong>Period From:</strong> {{ receipts[0]?.bill.policies.periodFrom | date }}</p>
+          <p><strong>Period To:</strong> {{ receipts[0]?.bill.policies.periodTo | date }}</p>
+        </div>
+      </div>
+
+      <!-- Premium Rate Card -->
+      <div class="card mb-3">
+        <div class="card-header text-center">Premium Rate</div>
+        <div class="card-body">
+          <p><strong>Rate:</strong> {{ receipts[0]?.bill.fire }}%</p>
+          <p><strong>R&SD:</strong> {{ receipts[0]?.bill.rsd }}%</p>
+          <p><strong>Fire Premium:</strong> {{ (receipts[0]?.bill.policies.sumInsured * receipts[0]?.bill.fire / 100) | currency: 'TK': 'symbol' }}</p>
+          <p><strong>VAT:</strong> {{ (receipts[0]?.bill.policies.sumInsured * receipts[0]?.bill.fire / 100 * receipts[0]?.bill.tax / 100) | currency: 'TK': 'symbol' }}</p>
+          <p><strong>Gross Premium:</strong> {{ (receipts[0]?.bill.policies.sumInsured * receipts[0]?.bill.fire / 100 + receipts[0]?.bill.policies.sumInsured * receipts[0]?.bill.fire / 100 * receipts[0]?.bill.tax / 100) | currency: 'TK': 'symbol' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Print Button centered -->
+    <div class="d-flex justify-content-center mt-3 no-print">
+      <button printSectionId="print-section" ngxPrint class="btn btn-primary printbtn">
+        <i class="fas fa-print"></i> <!-- Font Awesome icon for "print" -->
+        Print
+      </button>
+    </div>
+  </div>
+
+
+
+</body>
+</html>
