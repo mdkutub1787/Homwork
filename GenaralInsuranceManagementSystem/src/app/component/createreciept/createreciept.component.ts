@@ -43,11 +43,11 @@ export class CreaterecieptComponent implements OnInit {
       id: [''],
 
       bill: this.formBuilder.group({
-        fire: [''],
-        rsd: [''],
-        netPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
-        tax: [''],
-        grossPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
+        fire: [{ value: '', }],
+        rsd: [{ value: '', }],
+        netPremium: [{ value: '', }], // Disable to prevent manual editing
+        tax:[{ value: '', }],
+        grossPremium: [{ value: ''  }], // Disable to prevent manual editing
 
         policies: this.formBuilder.group({
           id: [undefined],
@@ -64,7 +64,7 @@ export class CreaterecieptComponent implements OnInit {
           construction: [undefined],
           owner: [undefined],
           usedAs: [undefined],
-          periodFrom: ['', Validators.required],
+          periodFrom: ['value', Validators.required],
           periodTo: [{ value: '', disabled: true }]
         })
       })
@@ -81,14 +81,20 @@ export class CreaterecieptComponent implements OnInit {
       }
     });
 
-    this.receiptForm.get('bill.policies')?.get('policyholder')?.valueChanges
-      .subscribe(policyholder => {
-        const selectedPolicy = this.bill.find(bill => bill.policies.policyholder === policyholder);
-        if (selectedPolicy) {
-          this.receiptForm.get('bill.policies')?.patchValue(selectedPolicy.policies);
-          this.calculatePremiums(); // Recalculate premiums when policyholder changes
-        }
-      });
+    this.receiptForm.get('bill.policies.policyholder')?.valueChanges
+    .subscribe(policyholder => {
+      const selectedPolicy = this.bill.find(bill => bill.policies.policyholder === policyholder);
+      if (selectedPolicy) {
+        this.receiptForm.patchValue({
+          bill: {
+            ...this.receiptForm.get('bill')?.value,
+            policies: selectedPolicy.policies
+          }
+        });
+        this.calculatePremiums(); // Recalculate premiums when policyholder changes
+      }
+    });
+  
     // Recalculate premiums when fire, rsd, or tax values change
     this.billForm.get('fire')?.valueChanges.subscribe(() => this.calculatePremiums());
     this.billForm.get('rsd')?.valueChanges.subscribe(() => this.calculatePremiums());
