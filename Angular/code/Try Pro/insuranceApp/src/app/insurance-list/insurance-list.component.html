@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Insurance Bills</h2>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Bill No</th>
+          <th>Date</th>
+          <th>Sum Insured</th>
+          <th> Insured</th>
+          <th>Stock Insured</th>
+          <th>Interest Insured</th>
+          <th> Situation</th>
+          <th> Period</th>
+          <th> Premium</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bill of insuranceBills">
+          <td>{{ bill.billNo }}</td>
+          <td>{{ bill.date }}</td>
+          <td>{{ bill.sumInsured }}</td>
+          <td>{{ bill.stockInsured }}</td>
+          <td>{{ bill.interestInsured }}</td>
+          <td>{{ bill.insured }}</td>
+          <td>{{ bill.period }}</td>
+          <td>{{ bill.premium }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="(bill)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="(bill.billNo)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

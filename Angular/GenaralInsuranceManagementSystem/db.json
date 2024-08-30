@@ -1,0 +1,206 @@
+{
+  "user": [
+    {
+      "id": "1",
+      "name": "Kutub Uddin",
+      "email": "kutub@gmail.com",
+      "password": "000000",
+      "photo": "https://i.postimg.cc/fLBf6HkV/1683291521920-copy-300x300.jpg ",
+      "role": "Admin"
+    },
+    {
+      "id": "e2a5",
+      "name": "Kutub Uddin",
+      "email": "mdkutubuddin1787@gmail.com",
+      "password": "000000",
+      "photo": "https://i.postimg.cc/fLBf6HkV/1683291521920-copy-300x300.jpg",
+      "role": "User"
+    },
+    {
+      "id": "7e2b",
+      "name": "towhid",
+      "email": "Towhidul@gmail.com",
+      "password": "000000",
+      "role": "User",
+      "photo": "https://i.postimg.cc/PqTzLCV7/Kutub.jpg"
+    }
+  ],
+  "policy": [
+    {
+      "billNo": 1001,
+      "date": "2024-08-29",
+      "bankName": "Islami Bank Bangladesh PLC, Baliakandi Sub-Branch, Rajbari",
+      "policyholder": "M/s Rizvi agro firm , prop: Rezvi chowdhory  ",
+      "address": "lalbagh Roard , Lalabagh Dhaka 1203",
+      "sumInsured": 8000,
+      "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+      "interestInsured": "Cosmetics and Library",
+      "coverage": "Fire &/or Lightning only",
+      "location": "185/1 lalbagh Roard , Lalabagh Dhaka 1203",
+      "construction": "2nd Class",
+      "owner": "The Insurd",
+      "usedAs": "Godwon Only",
+      "periodFrom": "2024-09-06",
+      "periodTo": "2025-09-06",
+      "id": "5b04"
+    },
+    {
+      "billNo": 1001,
+      "date": "2024-08-30",
+      "bankName": "Union Bank Plc",
+      "policyholder": "M/s Sanaullah agro firm , prop: Sanaullah chowdhory  ",
+      "address": "dhanmondi",
+      "sumInsured": 80000,
+      "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+      "interestInsured": "Cosmatics and Others",
+      "coverage": "Pizza Man",
+      "location": "lalbagh Roard , Lalabagh Dhaka 1203",
+      "construction": "2nd Class",
+      "owner": "The Insurd",
+      "usedAs": "Godwon Only",
+      "periodFrom": "2024-08-28",
+      "periodTo": "2025-08-28",
+      "id": "4e7c"
+    }
+  ],
+  "bills": [
+    {
+      "id": "3132",
+      "fire": 0.1,
+      "rsd": 0.2,
+      "netPremium": 24000,
+      "tax": 0.15,
+      "grossPremium": 26400,
+      "policies": {
+        "id": "4e7c",
+        "billNo": 1001,
+        "date": "2024-08-30",
+        "bankName": "Union Bank Plc",
+        "policyholder": "M/s Sanaullah agro firm , prop: Sanaullah chowdhory  ",
+        "address": "dhanmondi",
+        "sumInsured": 80000,
+        "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+        "interestInsured": "Cosmatics and Others",
+        "coverage": "Pizza Man",
+        "location": "lalbagh Roard , Lalabagh Dhaka 1203",
+        "construction": "2nd Class",
+        "owner": "The Insurd",
+        "usedAs": "Godwon Only",
+        "periodFrom": "2024-08-28",
+        "periodTo": "2025-08-28"
+      }
+    },
+    {
+      "id": "f5e0",
+      "fire": 0.1,
+      "rsd": 0.2,
+      "netPremium": 2400,
+      "tax": 0.15,
+      "grossPremium": 2640,
+      "policies": {
+        "id": "5b04",
+        "billNo": 1001,
+        "date": "2024-08-29",
+        "bankName": "Islami Bank Bangladesh PLC, Baliakandi Sub-Branch, Rajbari",
+        "policyholder": "M/s Rizvi agro firm , prop: Rezvi chowdhory  ",
+        "address": "lalbagh Roard , Lalabagh Dhaka 1203",
+        "sumInsured": 8000,
+        "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+        "interestInsured": "Cosmetics and Library",
+        "coverage": "Fire &/or Lightning only",
+        "location": "185/1 lalbagh Roard , Lalabagh Dhaka 1203",
+        "construction": "2nd Class",
+        "owner": "The Insurd",
+        "usedAs": "Godwon Only",
+        "periodFrom": "2024-09-06",
+        "periodTo": "2025-09-06"
+      }
+    }
+  ],
+  "reciept": [
+    {
+      "id": "9949",
+      "bill": {
+        "fire": 0.1,
+        "rsd": 0.2,
+        "netPremium": 24000,
+        "tax": 0.15,
+        "grossPremium": 26400,
+        "policies": {
+          "id": "4e7c",
+          "billNo": 1001,
+          "date": "2024-08-30",
+          "bankName": "Union Bank Plc",
+          "policyholder": "M/s Sanaullah agro firm , prop: Sanaullah chowdhory  ",
+          "address": "dhanmondi",
+          "sumInsured": 80000,
+          "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+          "interestInsured": "Cosmatics and Others",
+          "coverage": "Pizza Man",
+          "location": "lalbagh Roard , Lalabagh Dhaka 1203",
+          "construction": "2nd Class",
+          "owner": "The Insurd",
+          "usedAs": "Godwon Only",
+          "periodFrom": "2024-08-28",
+          "periodTo": "2025-08-28"
+        }
+      }
+    },
+    {
+      "id": "f86d",
+      "bill": {
+        "fire": 0.1,
+        "rsd": 0.2,
+        "netPremium": 2400,
+        "tax": 0.15,
+        "grossPremium": 2640,
+        "policies": {
+          "id": "5b04",
+          "billNo": 1001,
+          "date": "2024-08-29",
+          "bankName": "Islami Bank Bangladesh PLC, Baliakandi Sub-Branch, Rajbari",
+          "policyholder": "M/s Rizvi agro firm , prop: Rezvi chowdhory  ",
+          "address": "lalbagh Roard , Lalabagh Dhaka 1203",
+          "sumInsured": 8000,
+          "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+          "interestInsured": "Cosmetics and Library",
+          "coverage": "Fire &/or Lightning only",
+          "location": "185/1 lalbagh Roard , Lalabagh Dhaka 1203",
+          "construction": "2nd Class",
+          "owner": "The Insurd",
+          "usedAs": "Godwon Only",
+          "periodFrom": "2024-09-06",
+          "periodTo": "2025-09-06"
+        }
+      }
+    },
+    {
+      "id": "975a",
+      "bill": {
+        "fire": 0.1,
+        "rsd": 0.2,
+        "netPremium": 2400,
+        "tax": 0.15,
+        "grossPremium": 2640,
+        "policies": {
+          "id": "5b04",
+          "billNo": 1001,
+          "date": "2024-08-29",
+          "bankName": "Islami Bank Bangladesh PLC, Baliakandi Sub-Branch, Rajbari",
+          "policyholder": "M/s Rizvi agro firm , prop: Rezvi chowdhory  ",
+          "address": "lalbagh Roard , Lalabagh Dhaka 1203",
+          "sumInsured": 8000,
+          "stockInsured": "Onion, Garlic & Seasonal Crops (Without Jute)",
+          "interestInsured": "Cosmetics and Library",
+          "coverage": "Fire &/or Lightning only",
+          "location": "185/1 lalbagh Roard , Lalabagh Dhaka 1203",
+          "construction": "2nd Class",
+          "owner": "The Insurd",
+          "usedAs": "Godwon Only",
+          "periodFrom": "2024-09-06",
+          "periodTo": "2025-09-06"
+        }
+      }
+    }
+  ]
+}

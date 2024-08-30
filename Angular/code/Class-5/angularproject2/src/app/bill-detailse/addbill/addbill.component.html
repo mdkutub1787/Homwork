@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Add Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center text-2xl font-bold mb-4">Bill Add Form</h1>
+            <form [formGroup]="billForm" (ngSubmit)="createBill()">
+                <div class="form-group" formGroupName="policies">
+                    <label for="policyholder">Policy Holder</label>
+                    <select id="policyholder" formControlName="policyholder" class="form-control" required>
+                        <option value="" disabled>Select your policy holder</option>
+                        <option *ngFor="let pol of policies" [ngValue]="pol.policyholder">{{pol.policyholder}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" formGroupName="policies">
+                    <label for="sumInsured">Sum Insured</label>
+                    <select id="sumInsured" formControlName="sumInsured" class="form-control" required>
+                        <option value="" disabled>Select sum insured</option>
+                        <option *ngFor="let pol of policies" [ngValue]="pol.sumInsured">{{pol.sumInsured}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" formGroupName="policies">
+                    <label for="address">Address</label>
+                    <select id="address" formControlName="address" class="form-control" required>
+                        <option value="" disabled>Select your address</option>
+                        <option *ngFor="let pol of policies" [ngValue]="pol.address">{{pol.address}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fire">Fire Rate</label>
+                    <input id="fire" type="number" class="form-control" formControlName="fire" placeholder="Enter fire rate">
+                </div>
+
+                <div class="form-group">
+                    <label for="rsd">R&SD Rate</label>
+                    <input id="rsd" type="number" class="form-control" formControlName="rsd" placeholder="Enter your R&SD rate">
+                </div>
+
+                <div class="form-group">
+                    <label for="netPremium">Net Premium</label>
+                    <input id="netPremium" type="number" class="form-control" formControlName="netPremium"
+                        placeholder="Net Premium" [value]="billForm.get('netPremium')?.value" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="tax">Tax Rate</label>
+                    <input id="tax" type="number" class="form-control" formControlName="tax" placeholder="Enter your tax rate">
+                </div>
+
+                <div class="form-group">
+                    <label for="grossPremium">Gross Premium</label>
+                    <input id="grossPremium" type="number" class="form-control" formControlName="grossPremium"
+                        placeholder="Gross Premium" [value]="billForm.get('grossPremium')?.value" readonly>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
