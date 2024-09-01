@@ -60,13 +60,13 @@ export class PolicyService {
   }
 
   // Search policies by criteria
-  searchPolicies(criteria: string, value: string): Observable<PolicyModel[]> {
-    const params = new HttpParams().set(criteria, value);
-    return this.http.get<PolicyModel[]>(this.baseUrl, { params })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
+  // searchPolicies(criteria: string, value: string): Observable<PolicyModel[]> {
+  //   const params = new HttpParams().set(criteria, value);
+  //   return this.http.get<PolicyModel[]>(this.baseUrl, { params })
+  //     .pipe(
+  //       catchError(this.handleError)
+  //     );
+  // }
 
   // Get all policies
   getAllPolicies(): Observable<PolicyModel[]> {
@@ -82,4 +82,13 @@ export class PolicyService {
   getLastBillNo(): Observable<number> {
     return this.http.get<number>(`${this.baseUrl}/last-bill-no`);
   }
+
+    // Search policies by policyholder
+    policyholder(query: string): Observable<PolicyModel[]> {
+      const searchUrl = `${this.baseUrl}?policyholder_like=${query}`;
+      return this.http.get<PolicyModel[]>(searchUrl)
+        .pipe(
+          catchError(this.handleError)
+        );
+    }
 }

@@ -12,11 +12,20 @@ export class RecieptService {
 
   constructor(private http: HttpClient) { }
 
-  getAllReciept(): Observable<any> {
-    return this.http.get(this.baseUrl)
+  getAllReciept(): Observable<ReceiptModel[]> {
+    return this.http.get<ReceiptModel[]>(this.baseUrl)
+  }
+  
+
+  getRecieptById(id: string): Observable<ReceiptModel> {
+    return this.http.get<ReceiptModel>(this.baseUrl + id)
   }
 
   createReciept(reciept: ReceiptModel): Observable<ReceiptModel> {
     return this.http.post<ReceiptModel>(this.baseUrl, reciept);
+  }
+
+  deleteReceipt(id: string): Observable<any> {
+    return this.http.delete(this.baseUrl + id);
   }
 }

@@ -24,6 +24,9 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { LogoutComponent } from './logout/logout.component';
+import { PrintReceiptComponent } from './component/printreceipt/printreceipt.component';
+import { NavbarComponent } from './guard/navbar/navbar.component';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { LogoutComponent } from './logout/logout.component';
     LoginComponent,
     UserprofileComponent,
     LogoutComponent,
+    PrintReceiptComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +58,7 @@ import { LogoutComponent } from './logout/logout.component';
     NgbModule,
     NgxPrintModule,
     AppRoutingModule,
+    
   ],
   providers: [
     // provideClientHydration(),
