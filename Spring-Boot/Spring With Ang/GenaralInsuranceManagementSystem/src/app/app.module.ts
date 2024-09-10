@@ -19,6 +19,7 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NavbarComponent } from './guard/navbar/navbar.component';
 import { CreatepolicyComponent } from './component/createpolicy/createpolicy.component';
+import { UpdatepolicyComponent } from './component/updatepolicy/updatepolicy.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CreatepolicyComponent } from './component/createpolicy/createpolicy.com
     UserprofileComponent,
     LogoutComponent,
     NavbarComponent,
-    CreatepolicyComponent
+    CreatepolicyComponent,
+    UpdatepolicyComponent
   ],
   imports: [
     BrowserModule,

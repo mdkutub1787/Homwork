@@ -26,4 +26,18 @@ export class PolicyService {
   deletePolicy(id: number): Observable<any> {
     return this.http.delete(this.baseUrl + "delete/" + id);
   }
+
+  // Update a policy by ID
+  updatePolicy(id: number, policy: PolicyModel): Observable<any> {
+    return this.http.put(this.baseUrl + "update/" + id, policy);
+  }
+
+  // Get a policy by ID
+  getByPolicyId(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  getAllPolicies(): Observable<PolicyModel[]> {
+    return this.http.get<PolicyModel[]>(this.baseUrl);
+  }
 }

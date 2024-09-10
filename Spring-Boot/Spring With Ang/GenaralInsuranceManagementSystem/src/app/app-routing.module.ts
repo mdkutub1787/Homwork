@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CreatepolicyComponent } from './component/createpolicy/createpolicy.component';
+import { UpdatepolicyComponent } from './component/updatepolicy/updatepolicy.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'home',component: HomeComponent},
   { path: "viewpolicy", component: PolicyComponent },
   { path: "createpolicy", component: CreatepolicyComponent },
+  { path: "updatepolicy/:id", component: UpdatepolicyComponent },
   { path: "reg", component: RegistrationComponent},
   { path: "login", component: LoginComponent},
   { path: "logout", component: LogoutComponent},
