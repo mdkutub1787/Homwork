@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/firepolicy")
+@CrossOrigin("*")
 public class FirePolicyController {
 
     @Autowired

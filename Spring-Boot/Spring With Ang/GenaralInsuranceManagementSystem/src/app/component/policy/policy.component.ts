@@ -26,18 +26,28 @@ export class PolicyComponent implements OnInit {
   deletePolicy(id: number) {
     this.policyService.deletePolicy(id)
       .subscribe({
-        next: res => {
-          console.log(res);
-          this.policies = this.policyService.viewAllPolicy();
-          this.router.navigate(['viewpolicy'])
+        next: () => {
+          // Handle successful deletion
+          console.log('Policy deleted successfully');
+  
+          // Refresh the list of policies
+          this.policyService.viewAllPolicy().subscribe({
+            next: (data) => {
+              this.policies = data; // Update the policies array with the refreshed data
+              console.log('Policies refreshed');
+              this.router.navigate(['viewpolicy']);
+            },
+            error: (err) => {
+              console.error('Error refreshing policies', err);
+            }
+          });
         },
-        error: error => {
-          console.log(error);
-
+        error: (error) => {
+          console.error('Error deleting policy', error);
         }
-
       });
   }
+  
 
   editPolicy(id: string) {
     this.router.navigate(['updatepolicy', id]);
