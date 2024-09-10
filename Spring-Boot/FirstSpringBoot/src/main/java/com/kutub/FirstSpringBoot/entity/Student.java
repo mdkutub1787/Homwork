@@ -4,27 +4,26 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Date;
 
 @Entity
-@Table(name = "student")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false,unique = true)
     private String name;
-    @Column(nullable = false, unique = true)
-    private String email;
-
+    @Column(nullable = false,unique = true)
     private String gender;
+    @Column(nullable = false,unique = true)
+    private String email;
+    @Column(nullable = false,unique = true)
+    private int cell;
 
-    @Column(nullable = false, unique = true)
-    private String cell;
-    @Column(nullable = false, unique = true)
-    private Date dob;
-
+    @ManyToOne
+    @JoinColumn(name="departmentId")
+    private Department department;
 }

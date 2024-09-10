@@ -1,6 +1,9 @@
 package com.kutub.SpringBoot.service;
 
+import com.kutub.SpringBoot.entity.Department;
+import com.kutub.SpringBoot.entity.Faculty;
 import com.kutub.SpringBoot.entity.Student;
+import com.kutub.SpringBoot.repository.DepartmentRepository;
 import com.kutub.SpringBoot.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +16,16 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
 
     public void saveStudent(Student s) {
+        Department newDepartment=departmentRepository.findById(s.getDepartment().getId())
+                .orElseThrow(
+                        ()-> new RuntimeException("user not found"+ s.getDepartment().getId())
+                );
+        s.setDepartment(newDepartment);
         studentRepository.save(s);
     }
 
@@ -22,7 +33,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public void deleteStudentById(int id) {
+    public void deleteStuden(int id) {
         studentRepository.deleteById(id);
     }
 
@@ -30,4 +41,11 @@ public class StudentService {
         return studentRepository.findById(id).get();
 
     }
+
+
+    public void updateStudent(Student s ,int id){
+        studentRepository.save(s);
+    }
+
+
 }

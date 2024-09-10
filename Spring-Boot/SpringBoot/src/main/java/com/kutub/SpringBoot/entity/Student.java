@@ -29,4 +29,8 @@ public class Student {
     @Column(nullable = false, unique = true)
     private Date dob;
 
+    @ManyToOne
+    @JoinColumn(name = "departmentId")
+    private Department department;
+
 }

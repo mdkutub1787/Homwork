@@ -39,7 +39,7 @@ public class StudentController {
 
     @RequestMapping("deletestudent/{id}")
     public String deleteStudent(@PathVariable("id") int id) {
-        studentService.deleteStudentById(id);
+        studentService.deleteStuden(id);
         return "redirect:/showAllStudent";
     }
 
