@@ -34,35 +34,54 @@ export class PrintreceiptComponent implements OnInit{
 
   }
 
-  getFirePremium(receipt: ReceiptModel | undefined): number {
-    if (receipt && receipt.fireBill && receipt.fireBill.firePolicy) {
-      const sumInsured = receipt.fireBill.firePolicy.sumInsured || 0;
-      const fire = receipt.fireBill.fire || 0;
-      return (sumInsured * fire) / 100;
-    }
-    return 0;
+  getSumInsured(): number {
+    // Provide a default value if `sumInsured` is undefined
+    return this.receipt?.fireBill?.firePolicy?.sumInsured ?? 0;
   }
 
-  getVAT(receipt: ReceiptModel | undefined): number {
-    if (receipt && receipt.fireBill && receipt.fireBill.firePolicy) {
-      const sumInsured = receipt.fireBill.firePolicy.sumInsured || 0;
-      const fire = receipt.fireBill.fire || 0;
-      const tax = receipt.fireBill.tax || 0;
-      return (sumInsured * fire / 100) * (tax / 100);
-    }
-    return 0;
+  getFireRate(): number {
+    // Provide a default value if `fire` is undefined
+    return this.receipt?.fireBill?.fire ?? 0;
   }
 
-  getGrossPremium(receipt: ReceiptModel | undefined): number {
-    if (receipt && receipt.fireBill && receipt.fireBill.firePolicy) {
-      const sumInsured = receipt.fireBill.firePolicy.sumInsured || 0;
-      const fire = receipt.fireBill.fire || 0;
-      const tax = receipt.fireBill.tax || 0;
-      const firePremium = sumInsured * fire / 100;
-      const vat = firePremium * (tax / 100);
-      return firePremium + vat;
-    }
-    return 0;
+  getTotalFire(): number {
+    const sumInsured = this.getSumInsured();
+    const fireRate = this.getFireRate();
+    return sumInsured * fireRate;
   }
 
+  getRsdRate(): number {
+    // Provide a default value if `rsd` is undefined
+    return this.receipt?.fireBill?.rsd ?? 0;
+  }
+
+  getTotalRsd(): number {
+    const sumInsured = this.getSumInsured();
+    const rsdRate = this.getRsdRate();
+    return sumInsured * rsdRate;
+  }
+
+  getTaxRate(): number {
+    // Provide a default value if `tax` is undefined
+    return this.receipt?.fireBill?.tax ?? 0;
+  }
+
+  getTotalPremium(): number {
+    const sumInsured = this.getSumInsured();
+    const fireRate = this.getFireRate();
+    const rsdRate = this.getRsdRate();
+    return sumInsured * (fireRate + rsdRate);
+  }
+
+  getTotalTax(): number {
+    const totalPremium = this.getTotalPremium();
+    const taxRate = this.getTaxRate();
+    return totalPremium * taxRate;
+  }
+
+  getTotalPremiumWithTax(): number {
+    const totalPremium = this.getTotalPremium();
+    const totalTax = this.getTotalTax();
+    return totalPremium + totalTax;
+  }
 }
