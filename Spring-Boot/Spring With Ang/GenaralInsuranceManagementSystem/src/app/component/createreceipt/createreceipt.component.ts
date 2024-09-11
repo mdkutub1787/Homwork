@@ -33,7 +33,7 @@ export class CreatereceiptComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-   
+    // const currentDate = new Date().toISOString().substring(0, 10); // Format as YYYY-MM-DD
     this.loadPolicies();
     this.loadBills();
 
@@ -68,6 +68,7 @@ export class CreatereceiptComponent implements OnInit{
     });
 
 
+
     this.receiptForm.get('bill.policies.policyholder')?.valueChanges
       .subscribe(policyholder => {
         this.selectedBill = this.bill.find(bill => bill.firePolicy.policyholder === policyholder);
@@ -87,7 +88,6 @@ export class CreatereceiptComponent implements OnInit{
         
         }
       });
-
 
 
 

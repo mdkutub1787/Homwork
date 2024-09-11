@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class CreatebillComponent implements OnInit{
 
-  policies: PolicyModel[] = [];
+ policies: PolicyModel[] = [];
   billForm!: FormGroup;
   bill: BillModel = new BillModel();
 

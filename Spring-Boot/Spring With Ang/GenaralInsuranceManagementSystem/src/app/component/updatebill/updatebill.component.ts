@@ -9,9 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-updatebill',
   templateUrl: './updatebill.component.html',
-  styleUrls: ['./updatebill.component.css']
+  styleUrl: './updatebill.component.css'
 })
-export class UpdatebillComponent implements OnInit {
+export class UpdatebillComponent {
 
   bill: BillModel = new BillModel();
   policies: PolicyModel[] = [];
@@ -27,15 +27,14 @@ export class UpdatebillComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.billId = +this.route.snapshot.params['id']; // Ensure id is a number
+    this.billId = this.route.snapshot.params['id'];
     console.log(this.billId);
-    
     this.billForm = this.formBuilder.group({
       fire: [''],
       rsd: [''],
-      netPremium: [{ value: '', disabled: true }],
+      netPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
       tax: [''],
-      grossPremium: [{ value: '', disabled: true }],
+      grossPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
       policies: this.formBuilder.group({
         id: [undefined],
         billNo: [undefined],
@@ -46,17 +45,11 @@ export class UpdatebillComponent implements OnInit {
         sumInsured: [undefined],
         stockInsured: [undefined],
         interestInsured: [undefined],
-        coverage: [undefined],
-        location: [undefined],
-        construction: [undefined],
-        owner: [undefined],
         usedAs: [undefined],
-        periodFrom: [undefined],
-        periodTo: [undefined]
       })
     });
 
-    this.loadPolicies();
+    this.loadBill();
     this.loadBillDetails();
 
     // Recalculate premiums when fire, rsd, or tax values change
@@ -65,14 +58,14 @@ export class UpdatebillComponent implements OnInit {
     this.billForm.get('tax')?.valueChanges.subscribe(() => this.calculatePremiums());
   }
 
-  loadPolicies(): void {
+  loadBill(): void {
     this.policiesService.viewAllPolicyForBill()
       .subscribe({
         next: (res: PolicyModel[]) => {
           this.policies = res;
         },
-        error: err => {
-          console.error('Error loading policies:', err);
+        error: er => {
+          console.log(er);
         }
       });
   }
@@ -88,16 +81,14 @@ export class UpdatebillComponent implements OnInit {
             netPremium: bill.netPremium,
             tax: bill.tax,
             grossPremium: bill.grossPremium,
-            policies: bill.firePolicy
+            policies: bill.firePolicy,
           });
         },
         error: error => {
-          console.error('Error loading bill details:', error);
+          console.log(error);
         }
       });
   }
-  
-  
 
   calculatePremiums(): void {
     const formValues = this.billForm.value;
@@ -106,7 +97,7 @@ export class UpdatebillComponent implements OnInit {
     const rsdRate = formValues.rsd || 0;
     const taxRate = formValues.tax || 0;
 
-    const netPremium = (sumInsured * fireRate) + (sumInsured * rsdRate);
+    const netPremium = (sumInsured * fireRate + sumInsured * rsdRate);
     const grossPremium = netPremium + (netPremium * taxRate);
 
     this.billForm.patchValue({
@@ -116,23 +107,22 @@ export class UpdatebillComponent implements OnInit {
   }
 
   updateBill(): void {
-    const updatedBill: BillModel = {
+    const updateBill: BillModel = {
       ...this.bill,
-      ...this.billForm.getRawValue()
+      ...this.billForm.getRawValue() 
     };
   
-    this.billService.updateBill(this.billId, updatedBill)
+   
+    this.billService.updateBill(this.billId, updateBill) 
       .subscribe({
-        next: (res: BillModel) => {
+        next: res => {
           console.log('Bill updated successfully:', res);
           this.billForm.reset();
-          this.router.navigate(['/viewbill']);
+          this.router.navigate(['viewbill']);
         },
-        error: (error) => {
-          console.error('Error updating bill:', error);
+        error: error => {
+          console.log('Error updating bill:', error);
         }
       });
   }
-  
-  }
-  
+}

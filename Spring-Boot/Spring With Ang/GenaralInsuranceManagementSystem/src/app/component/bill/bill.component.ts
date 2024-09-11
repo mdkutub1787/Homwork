@@ -11,10 +11,8 @@ import { Router } from '@angular/router';
 })
 export class BillComponent implements OnInit {
 
-  bills: BillModel[] = [];
-
   policyes: any;
-
+  bills: BillModel[] = [];
 
 
   constructor(
@@ -24,36 +22,47 @@ export class BillComponent implements OnInit {
 
   ) { }
 
+
+
   ngOnInit(): void {
-    this.loadBills();
+    this.policyes = this.policiesService.viewAllPolicyForBill();
+
+    // Subscribe to the observable to fetch bills
+    this.billService.viewAllBill().subscribe({
+      next: (data: BillModel[]) => {
+        this.bills = data;
+      },
+      error: (error) => {
+        console.error('Error fetching bills:', error);
+      }
+    });
   }
 
-  loadBills() {
+  deleteBill(id: number): void {
+    this.billService.deleteBill(id)
+      .subscribe({
+        next: () => {
+          this.refreshBills();
+          this.router.navigate(['/viewbill']);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+  }
+  private refreshBills(): void {
     this.billService.viewAllBill().subscribe({
-      next: (res: BillModel[]) => {
-        this.bills = res;
+      next: (data: BillModel[]) => {
+        this.bills = data;
       },
-      error: err => {
-        console.error('Error loading bills:', err);
-        alert('Failed to load bills');
+      error: (error) => {
+        console.error('Error fetching bills:', error);
       }
     });
   }
 
   editBill(bill: BillModel): void {
     this.router.navigate(['/updatebill', bill.id]);
-  }
-
-  deleteBill(id: number): void { 
-    this.billService.deleteBill(id)
-      .subscribe({
-        next: () => {
-          this.router.navigate(['viewbill']);
-        },
-        error: (error) => {
-          console.log('Error deleting bill:', error);
-        }
-      });
   }
   
 
@@ -98,6 +107,4 @@ export class BillComponent implements OnInit {
 
     return netPremium + taxAmount;
   }
-
-
 }
