@@ -34,12 +34,12 @@ export class UpdatepolicyComponent implements OnInit {
             this.formValue.patchValue(this.policy);
           } else {
             console.error('Policy not found');
-            // Handle policy not found case
+            
           }
         },
         error: err => {
           console.log(err);
-          // Handle error case
+         
         }
       });
     }
@@ -79,8 +79,8 @@ export class UpdatepolicyComponent implements OnInit {
 
   updatePolicy() {
     this.policy = this.formValue.value;
-    this.policy.id = this.policyId; // Ensure the policy ID is included in the update request
-    this.policyService.updatePolicy(this.policyId, this.policy) // Pass both id and policy
+    this.policy.id = this.policyId; 
+    this.policyService.updatePolicy(this.policyId, this.policy) 
       .subscribe({
         next: res => {
           console.log(res);
@@ -89,7 +89,7 @@ export class UpdatepolicyComponent implements OnInit {
         },
         error: err => {
           console.log(err);
-          // Handle error case
+         
         }
       });
   }

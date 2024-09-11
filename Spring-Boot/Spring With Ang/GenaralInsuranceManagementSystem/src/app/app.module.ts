@@ -20,6 +20,12 @@ import { LogoutComponent } from './logout/logout.component';
 import { NavbarComponent } from './guard/navbar/navbar.component';
 import { CreatepolicyComponent } from './component/createpolicy/createpolicy.component';
 import { UpdatepolicyComponent } from './component/updatepolicy/updatepolicy.component';
+import { BillComponent } from './component/bill/bill.component';
+import { CreatebillComponent } from './component/createbill/createbill.component';
+import { UpdatebillComponent } from './component/updatebill/updatebill.component';
+import { CreatereceiptComponent } from './component/createreceipt/createreceipt.component';
+import { ReceiptComponent } from './component/receipt/receipt.component';
+import { PrintreceiptComponent } from './component/printreceipt/printreceipt.component';
 
 
 @NgModule({
@@ -33,7 +39,13 @@ import { UpdatepolicyComponent } from './component/updatepolicy/updatepolicy.com
     LogoutComponent,
     NavbarComponent,
     CreatepolicyComponent,
-    UpdatepolicyComponent
+    UpdatepolicyComponent,
+    BillComponent,
+    CreatebillComponent,
+    UpdatebillComponent,
+    CreatereceiptComponent,
+    ReceiptComponent,
+    PrintreceiptComponent
   ],
   imports: [
     BrowserModule,

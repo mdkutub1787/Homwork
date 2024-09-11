@@ -36,8 +36,9 @@ export class PolicyService {
   getByPolicyId(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
-
-  getAllPolicies(): Observable<PolicyModel[]> {
-    return this.http.get<PolicyModel[]>(this.baseUrl);
+  viewAllPolicyForBill(): Observable<PolicyModel[]> {
+    return this.http.get<PolicyModel[]>(this.baseUrl)
+    
   }
+ 
 }

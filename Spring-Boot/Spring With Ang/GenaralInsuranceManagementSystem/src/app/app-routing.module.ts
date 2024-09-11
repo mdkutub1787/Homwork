@@ -8,6 +8,12 @@ import { UserprofileComponent } from './userprofile/userprofile.component';
 import { LogoutComponent } from './logout/logout.component';
 import { CreatepolicyComponent } from './component/createpolicy/createpolicy.component';
 import { UpdatepolicyComponent } from './component/updatepolicy/updatepolicy.component';
+import { BillComponent } from './component/bill/bill.component';
+import { CreatebillComponent } from './component/createbill/createbill.component';
+import { UpdatebillComponent } from './component/updatebill/updatebill.component';
+import { ReceiptComponent } from './component/receipt/receipt.component';
+import { CreatereceiptComponent } from './component/createreceipt/createreceipt.component';
+import { PrintreceiptComponent } from './component/printreceipt/printreceipt.component';
 
 
 const routes: Routes = [
@@ -16,6 +22,12 @@ const routes: Routes = [
   { path: "viewpolicy", component: PolicyComponent },
   { path: "createpolicy", component: CreatepolicyComponent },
   { path: "updatepolicy/:id", component: UpdatepolicyComponent },
+  { path: "viewbill", component: BillComponent },
+  { path: "createbill", component: CreatebillComponent },
+  { path: "updatebill/:id", component: UpdatebillComponent},
+  { path: "viewreciept", component: ReceiptComponent},
+  { path: "createreciept", component: CreatereceiptComponent},
+  { path: "printreciept/:id", component: PrintreceiptComponent},
   { path: "reg", component: RegistrationComponent},
   { path: "login", component: LoginComponent},
   { path: "logout", component: LogoutComponent},
