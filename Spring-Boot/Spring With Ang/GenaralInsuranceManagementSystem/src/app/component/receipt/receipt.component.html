@@ -27,15 +27,19 @@
         <th><i class="fas fa-building"></i> Bank Name</th>
         <th><i class="fas fa-map-marker-alt"></i> Address</th>
         <th><i class="fas fa-dollar-sign"></i> Sum Insured</th>
+        <th><i class="fas fa-coins"></i> Net Premium</th>
+        <th><i class="fas fa-wallet"></i> Gross Premium</th>
         <th class="text-center"><i class="fas fa-cogs"></i> Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let receipt of receipts">
-        <td><i class="fas fa-user"></i> {{ receipt.fireBill.firePolicy.policyholder }}</td>
-        <td><i class="fas fa-building"></i> {{ receipt.fireBill.firePolicy.bankName }}</td>
-        <td><i class="fas fa-map-marker-alt"></i> {{ receipt.fireBill.firePolicy.address }}</td>
-        <td><i class="fas fa-dollar-sign"></i> {{ receipt.fireBill.firePolicy.sumInsured }}</td>
+        <td> {{ receipt.fireBill.firePolicy.policyholder }}</td>
+        <td> {{ receipt.fireBill.firePolicy.bankName }}</td>
+        <td> {{ receipt.fireBill.firePolicy.address }}</td>
+        <td>{{ receipt.fireBill.firePolicy.sumInsured | currency:'TK':'symbol'}}</td>
+        <td>{{ receipt.fireBill.netPremium | currency:'TK':'symbol'}}</td>
+        <td>{{ receipt.fireBill.grossPremium | currency:'TK':'symbol'}}</td>
         <td class="text-center">
           <button class="btn custom-btn" aria-label="Print View" (click)="viewReceipt(receipt.id)">
             <i class="fas fa-eye"></i> Print View

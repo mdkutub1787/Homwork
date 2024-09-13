@@ -25,13 +25,13 @@ public class FireBillService {
     }
 
     // Add a new FireBill
-    public void saveFireBill(FireBill d) {
-        FirePolicy policy = firePolicyRepository.findById(d.getFirePolicy().getId())
+    public void saveFireBill(FireBill fb) {
+        FirePolicy policy = firePolicyRepository.findById(fb.getFirePolicy().getId())
                 .orElseThrow(
-                        () -> new RuntimeException("User not found " + d.getFirePolicy().getId())
+                        () -> new RuntimeException("User not found " + fb.getFirePolicy().getId())
                 );
-        d.setFirePolicy(policy);
-        fireBillRepository.save(d);
+        fb.setFirePolicy(policy);
+        fireBillRepository.save(fb);
     }
 
 

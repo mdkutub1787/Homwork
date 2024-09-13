@@ -41,5 +41,8 @@ public class FirePolicyController {
         firePolicyService.deleteFirePolicy(id);
     }
 
-
+    @GetMapping("/{id}")
+    public FirePolicy getFirePolicyById(@PathVariable ("id") int id){
+        return   firePolicyService.findById(id);
+    }
 }

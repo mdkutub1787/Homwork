@@ -1,5 +1,6 @@
 package com.kutub.InsuranceManagement.service;
 
+import com.kutub.InsuranceManagement.entity.FireBill;
 import com.kutub.InsuranceManagement.entity.FirePolicy;
 import com.kutub.InsuranceManagement.repository.FirePolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class FirePolicyService {
 
     // Find a FirePolicy entity by its ID
     public  FirePolicy findById(int id){
-
         return  firePolicyRepository.findById(id).get();
     }
+
 
     // Update FirePolicy by id
     public  void updateFirePolicy(FirePolicy fp, int id){

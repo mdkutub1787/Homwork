@@ -44,6 +44,11 @@ public class FireBillController {
         fireBillService.deleteFireBill(id);
     }
 
+    @GetMapping("/{id}")
+    public FireBill getFireBillById(@PathVariable ("id") int id){
+        return   fireBillService.findById(id);
+    }
+
     // Endpoint to search FireBills by policyholder name
     @GetMapping("/searchpolicyholder")
     public List<FireBill> findFireBillsByPolicyholder(@RequestParam String policyholder) {

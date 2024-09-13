@@ -41,6 +41,11 @@ public class ReceiptController {
         receiptService.deleteReceipt(id);
     }
 
+    @GetMapping("/{id}")
+    public Receipt getReceiptById(@PathVariable ("id") int id){
+        return   receiptService.findById(id);
+    }
+
     // Endpoint to search Receipts by policyholder name
     @GetMapping("/searchpolicyholder")
     public List<Receipt> findReceiptsByPolicyholder(@RequestParam String policyholder) {
