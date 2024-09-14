@@ -48,7 +48,6 @@ export class CreatereceiptComponent implements OnInit{
 
         policies: this.formBuilder.group({
           id: [undefined],
-          billNo: [undefined],
           date: [undefined],
           bankName: [undefined],
           policyholder: [undefined],
@@ -124,7 +123,7 @@ export class CreatereceiptComponent implements OnInit{
     if (this.receiptForm.valid) {
       const formValues = this.receiptForm.value;
       this.reciept.fireBill = formValues.bill;
-      this.receiptService.createReciept(this.reciept)
+      this.receiptService.createReceipt(this.reciept)
         .subscribe({
           next: res => {
             this.loadPolicies();

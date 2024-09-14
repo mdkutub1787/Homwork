@@ -30,7 +30,7 @@ export class ReceiptComponent {
  
 
   private loadReceipts(): void {
-    this.receiptService.getAllReciept().subscribe({
+    this.receiptService.getAllReceipt().subscribe({
       next: response => {
         this.receipts = response;
       },

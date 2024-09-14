@@ -1,9 +1,12 @@
 package com.kutub.InsuranceManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -31,8 +34,21 @@ public class FireBill {
     @Column(nullable = false)
     private double grossPremium;
 
+
+
+
     // A FireBill is associated with one FirePolicy
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "firePolicyId")  // FirePolicy foreign key
+    @JoinColumn(name = "firePolicyId", nullable = false)  // FirePolicy foreign key
     private FirePolicy firePolicy;
+
+//    // A FireBill can have many receipts, and receipts are mapped by the "fireBill" field in the Receipt entity
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "fireBill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Receipt> receipts;
+
+
+
+
+
 }

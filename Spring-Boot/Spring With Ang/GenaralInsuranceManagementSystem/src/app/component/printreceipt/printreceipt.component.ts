@@ -23,7 +23,7 @@ export class PrintreceiptComponent implements OnInit{
   ngOnInit(): void {
 
     const id = this.route.snapshot.params['id'];
-    this.receiptService.getRecieptById(id).subscribe({
+    this.receiptService.getReceiptById(id).subscribe({
       next: response => {
         this.receipt = response;
       },

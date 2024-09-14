@@ -19,5 +19,7 @@ public class Receipt {
     @JoinColumn(name = "fireBillId")
     private FireBill fireBill ;
 
-
+//    public Receipt(int id) {
+//        this.id = id;
+//    }
 }

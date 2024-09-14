@@ -34,9 +34,5 @@ public class FirePolicy {
 
 
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "firePolicy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<FireBill> fireBills;
-
 
 }
