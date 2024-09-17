@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "receipts")
 public class Receipt {
 
     @Id
@@ -19,7 +20,5 @@ public class Receipt {
     @JoinColumn(name = "billId")
     private Bill bill ;
 
-    public Receipt(int id) {
-        this.id = id;
-    }
+
 }

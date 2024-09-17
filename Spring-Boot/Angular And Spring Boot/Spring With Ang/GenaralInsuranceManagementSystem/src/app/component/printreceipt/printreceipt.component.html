@@ -156,7 +156,7 @@
           </tr>
           <tr>
             <td><strong>Tax on Net Premium</strong></td>
-            <td>{{ receipt?.bill?.tax | percent }}</td>
+            <td>{{ receipt?.bill?.tax | percent }}{{ getTotalPremium() | number:'1.2-2' }}</td>
             <td class="currency-symbol">TK</td>
             <td>{{ getTotalTax() | number:'1.2-2' }}</td> 
           <tr>

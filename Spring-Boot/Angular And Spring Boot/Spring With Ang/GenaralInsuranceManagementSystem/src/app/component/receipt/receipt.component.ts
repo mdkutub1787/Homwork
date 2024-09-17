@@ -53,11 +53,11 @@ export class ReceiptComponent {
       });
     }
   
-  
 
-
-  navigateToAddReciept() {
+  navigateToAddReceipt() {
     this.router.navigateByUrl('/createreciept');
   }
+
+
 
 }
