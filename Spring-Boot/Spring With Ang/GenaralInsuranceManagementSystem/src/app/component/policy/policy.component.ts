@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PolicyService } from '../../service/policy.service';
 import { Router } from '@angular/router';
+import { PolicyModel } from '../../model/policy.model';
+import { Observable } from 'rxjs';
 
 
 
@@ -10,7 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./policy.component.css']
 })
 export class PolicyComponent implements OnInit {
-  policy: any;
+
+  policy!: Observable<PolicyModel[]>;
 
 
   constructor(
@@ -19,9 +22,14 @@ export class PolicyComponent implements OnInit {
     
   ) { }
 
-  ngOnInit(): void {
-    this.policy = this.policyService.viewAllPolicy();
 
+
+  ngOnInit() {
+    this.reloadPolicy();
+  }
+
+  reloadPolicy() {
+    this.policy = this.policyService.viewAllPolicy();
   }
 
   deletePolicy(id: number) {
@@ -44,11 +52,18 @@ export class PolicyComponent implements OnInit {
   editPolicy(id: number) {
     this.router.navigate(['updatepolicy', id]);
   }
+
+  detailsPolicy(id: number) {
+    this.router.navigate(['details', id]);
+  }
   
 
   navigateToAddPolicy() {
     this.router.navigateByUrl('/createpolicy');
   }
 
+  navigateToAddBill() {
+    this.router.navigateByUrl('/createbill');
+  }
 
 }

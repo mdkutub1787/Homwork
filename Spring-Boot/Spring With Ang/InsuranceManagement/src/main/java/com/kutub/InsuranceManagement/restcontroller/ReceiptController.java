@@ -3,6 +3,7 @@ package com.kutub.InsuranceManagement.restcontroller;
 import com.kutub.InsuranceManagement.entity.Receipt;
 import com.kutub.InsuranceManagement.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,12 +44,6 @@ public class ReceiptController {
     @GetMapping("/{id}")
     public Receipt getReceiptById(@PathVariable ("id") int id){
         return   receiptService.findById(id);
-    }
-
-    // Endpoint to search Receipts by policyholder name
-    @GetMapping("/searchpolicyholder")
-    public List<Receipt> findReceiptsByPolicyholder(@RequestParam String policyholder) {
-        return receiptService.findByPolicyHolderName(policyholder);
     }
 
 

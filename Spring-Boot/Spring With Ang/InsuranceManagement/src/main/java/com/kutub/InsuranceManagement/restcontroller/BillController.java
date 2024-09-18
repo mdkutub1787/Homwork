@@ -3,6 +3,8 @@ package com.kutub.InsuranceManagement.restcontroller;
 import com.kutub.InsuranceManagement.entity.Bill;
 import com.kutub.InsuranceManagement.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,13 +43,27 @@ public class BillController {
         billService.deleteBill(id);
     }
 
+    // Get bill by ID
     @GetMapping("/{id}")
-    public Bill getBillById(@PathVariable ("id") int id){
-        return   billService.findById(id);
+    public ResponseEntity<Bill> getBillById(@PathVariable int id) {
+        Bill bill = billService.getBillById(id);
+        return ResponseEntity.ok(bill);
     }
 
-    @GetMapping("/searchpolicyholder")
-    public List<Bill> findBillsByPolicyholder(@RequestParam String policyholder) {
-        return billService.findByPolicyHolderName(policyholder);
+    // Search bills by policyholder
+    @GetMapping("/search")
+    public List<Bill> getBillsByPolicyholder(@RequestParam String policyholder) {
+        return billService.getBillsByPolicyholder(policyholder);
     }
+
+
+
+    @GetMapping("/searchpolicyid")
+    public ResponseEntity<List<Bill>> findBillsByPolicyId(@RequestParam("policyid") int policyid) {
+        List<Bill> bills = billService.findBillByPolicyId(policyid);
+        return ResponseEntity.ok(bills);
+    }
+
+
+
 }

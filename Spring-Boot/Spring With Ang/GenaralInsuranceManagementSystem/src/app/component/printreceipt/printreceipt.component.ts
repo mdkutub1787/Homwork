@@ -6,9 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-printreceipt',
   templateUrl: './printreceipt.component.html',
-  styleUrl: './printreceipt.component.css'
+  styleUrls: ['./printreceipt.component.css'] // Correcting "styleUrl" to "styleUrls"
 })
-export class PrintreceiptComponent implements OnInit{
+export class PrintreceiptComponent implements OnInit {
 
   receipt?: ReceiptModel;
 
@@ -18,70 +18,63 @@ export class PrintreceiptComponent implements OnInit{
     private route: ActivatedRoute 
   ) { }
 
-
-
   ngOnInit(): void {
-
     const id = this.route.snapshot.params['id'];
     this.receiptService.getReceiptById(id).subscribe({
       next: response => {
         this.receipt = response;
       },
       error: error => {
-        alert(error)
+        alert(error);
       }
-    })
-
+    });
   }
 
   getSumInsured(): number {
-    // Provide a default value if `sumInsured` is undefined
     return this.receipt?.bill?.policy?.sumInsured ?? 0;
   }
 
   getFireRate(): number {
-    // Provide a default value if `fire` is undefined
-    return this.receipt?.bill?.fire ?? 0;
+    return (this.receipt?.bill?.fire ?? 0) / 100;
   }
 
   getTotalFire(): number {
     const sumInsured = this.getSumInsured();
     const fireRate = this.getFireRate();
-    return sumInsured * fireRate;
+    return Math.round(sumInsured * fireRate);
   }
 
   getRsdRate(): number {
-    // Provide a default value if `rsd` is undefined
-    return this.receipt?.bill?.rsd ?? 0;
+    return (this.receipt?.bill?.rsd ?? 0) / 100;
   }
 
   getTotalRsd(): number {
     const sumInsured = this.getSumInsured();
     const rsdRate = this.getRsdRate();
-    return sumInsured * rsdRate;
+    return Math.round(sumInsured * rsdRate);
   }
 
   getTaxRate(): number {
-    // Provide a default value if `tax` is undefined
-    return this.receipt?.bill?.tax ?? 0;
+    return (this.receipt?.bill?.tax ?? 0) / 100;
   }
 
   getTotalPremium(): number {
     const sumInsured = this.getSumInsured();
     const fireRate = this.getFireRate();
     const rsdRate = this.getRsdRate();
-    return sumInsured * (fireRate + rsdRate);
+    return Math.round(sumInsured * (fireRate + rsdRate));
   }
 
   getTotalTax(): number {
     const totalPremium = this.getTotalPremium();
     const taxRate = this.getTaxRate();
-    return totalPremium * taxRate;
+    return Math.round(totalPremium * taxRate);
   }
 
   getTotalPremiumWithTax(): number {
     const totalPremium = this.getTotalPremium();
     const totalTax = this.getTotalTax();
-    return totalPremium + totalTax;
+    return Math.round(totalPremium + totalTax);
   }
+
 }

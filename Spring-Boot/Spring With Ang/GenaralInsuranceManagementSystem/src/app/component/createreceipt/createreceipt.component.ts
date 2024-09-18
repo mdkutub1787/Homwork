@@ -99,7 +99,7 @@ export class CreatereceiptComponent implements OnInit {
 
   // Load all bills for receipt
   loadBills(): void {
-    this.billService.getAllBillForReciept()
+    this.billService.getAllBillForReceipt()
       .subscribe({
         next: res => {
           this.bill = res;

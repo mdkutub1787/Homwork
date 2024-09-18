@@ -35,13 +35,6 @@ public class BillService {
 
 
 
-
-    public Bill findById(int id) {
-        return billRepository.findById(id).get();
-    }
-
-
-
     public void updateBill(Bill b, int id) {
         billRepository.save(b);
 
@@ -54,8 +47,21 @@ public class BillService {
     }
 
 
-    public List<Bill> findByPolicyHolderName(String policyholder) {
-        return billRepository.findFireBillsByPolicyholder(policyholder);
+    // Get a bill by its ID
+    public Bill getBillById(int id) {
+        return billRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bill not found with ID: " + id));
+    }
+
+    // Find bills by policyholder name
+    public List<Bill> getBillsByPolicyholder(String policyholder) {
+        return billRepository.findBillsByPolicyholder(policyholder);
+    }
+
+    // Find bills by the associated policy ID
+    public List<Bill> findBillByPolicyId(int policyId) {
+        return billRepository.findBillsByPolicyId(policyId);
+
     }
 
 }

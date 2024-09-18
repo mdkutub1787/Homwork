@@ -13,10 +13,6 @@ import java.util.List;
 public interface ReceiptRepository extends JpaRepository<Receipt, Integer> {
 
 
-    @Query("SELECT r FROM Receipt r WHERE r.bill.policy.policyholder = :policyholder")
-    List<Receipt> findReceiptByPolicyholder(@Param("policyholder") String policyholder);
-
-
 }
 
 

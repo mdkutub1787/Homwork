@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { PolicyService } from '../../service/policy.service';
-import { BillService } from '../../service/bill.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ReceiptModel } from '../../model/receipt.model';
 import { ReceiptService } from '../../service/receipt.service';
 
@@ -16,11 +14,9 @@ export class ReceiptComponent {
   receipts: ReceiptModel[] = [];
 
   constructor(
-    private policiesService: PolicyService,
-    private billService: BillService,
     private receiptService:ReceiptService ,
     private router: Router,
-    private route: ActivatedRoute 
+   
   ) { }
 
   ngOnInit(): void {
@@ -46,18 +42,22 @@ export class ReceiptComponent {
   }
 
   deleteReceipt(id: number): void {
-    
-      this.receiptService.deleteReceipt(id).subscribe(() => {
-        this.receipts = this.receipts.filter(receipt => receipt.id == id);
-        
-      });
-    }
+    this.receiptService.deleteReceipt(id).subscribe({
+      next: () => {
+        this.receipts = this.receipts.filter(receipt => receipt.id !== id);
+        this.router.navigate(['/viewreciept']);
+      },
+      error: (err) => {
+        console.error('Error deleting receipt:', err);
+        alert('There was an error deleting the receipt. Please try again.');
+      }
+    });
+  }
   
-  
-
-
-  navigateToAddReciept() {
+  navigateToAddReceipt() {
     this.router.navigateByUrl('/createreciept');
   }
+
+  
 
 }

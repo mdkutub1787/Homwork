@@ -7,14 +7,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository
 
+@Repository
 public interface BillRepository extends JpaRepository<Bill, Integer> {
 
-    // Adjusted query assuming Bill has a reference to FirePolicy entity via `policy`.
-    @Query("SELECT fb FROM Bill fb WHERE fb.policy.policyholder = :policyholder")
-    List<Bill> findFireBillsByPolicyholder(@Param("policyholder") String policyholder);
+    // Custom query to find bills by policyholder in the associated policy
+    @Query("SELECT b FROM Bill b WHERE b.policy.policyholder = :policyholder")
+    List<Bill> findBillsByPolicyholder(@Param("policyholder") String policyholder);
 
 
+    // Custom query to find bills by policy ID
+    @Query("SELECT b FROM Bill b WHERE b.policy.id = :policyId")
+    List<Bill> findBillsByPolicyId(@Param("policyId") int policyId);
 
 }

@@ -51,7 +51,15 @@ public class ReceiptService {
     }
 
 
-    public List<Receipt> findByPolicyHolderName(String policyholder) {
-        return receiptRepository.findReceiptByPolicyholder(policyholder);
-    }
+//    public List<Receipt> findByPolicyHolderName(String policyholder) {
+//        return receiptRepository.findReceiptByPolicyholder(policyholder);
+//    }
+//
+//    public List<Receipt> findReceiptsByPolicyholder(String policyholder) {
+//        return receiptRepository.findReceiptByPolicyholder(policyholder);
+//    }
+//
+//    public List<Receipt> findReceiptsByBillId(int billid) {
+//        return receiptRepository.findReceiptByBillId(billid);
+//    }
 }

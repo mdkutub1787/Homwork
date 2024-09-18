@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-createbill',
   templateUrl: './createbill.component.html',
-  styleUrl: './createbill.component.css'
+  styleUrls: ['./createbill.component.css']
 })
-export class CreatebillComponent implements OnInit{
+export class CreatebillComponent implements OnInit {
 
- policies: PolicyModel[] = [];
+  policies: PolicyModel[] = [];
   billForm!: FormGroup;
   bill: BillModel = new BillModel();
 
@@ -22,114 +22,105 @@ export class CreatebillComponent implements OnInit{
     private policyService: PolicyService,
     private formBuilder: FormBuilder,
     private router: Router,
-    
   ) { }
 
   ngOnInit(): void {
-    const currentDate = new Date().toISOString().substring(0, 10); // Format as YYYY-MM-DD
+    this.initializeForm();
     this.loadPolicies();
+    this.setupSubscriptions();
+  }
 
+  initializeForm(): void {
     this.billForm = this.formBuilder.group({
-      fire: [''],
-      rsd: [''],
-      netPremium: [{ value: '' }], // Disable to prevent manual editing
-      tax: ['.15'],
-      grossPremium: [{ value: '' }], // Disable to prevent manual editing
+      fire: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+      rsd: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+      netPremium: [{ value: 0, }],
+      tax: [15, [Validators.min(0), Validators.max(100)]],
+      grossPremium: [{ value: 0,  }],
       policies: this.formBuilder.group({
-        id: [undefined],
-        billNo: [undefined],
-        date: [currentDate],
-        bankName: [undefined],
-        policyholder: [undefined],
-        address: [undefined],
-        sumInsured: [undefined],
-        stockInsured: [undefined],
-        interestInsured: [undefined],
-        coverage: [undefined],
-        location: [undefined],
-        construction: [undefined],
-        owner: [undefined],
-        usedAs: [undefined],
-        periodFrom: ['', Validators.required],
-        periodTo: [{ value: '' }]
+        policyholder: [null, Validators.required],
+        address: [null, Validators.required],
+        sumInsured: [null, Validators.required]
       })
     });
 
-    this.billForm.get('periodFrom')?.valueChanges.subscribe(value => {
-      if (value) {
-        const periodFromDate = new Date(value);
-        const periodToDate = new Date(periodFromDate);
-        periodToDate.setFullYear(periodFromDate.getFullYear() + 1);
-        this.billForm.patchValue({
-          periodTo: periodToDate.toISOString().substring(0, 10) // Format as YYYY-MM-DD
-        }, { emitEvent: false });
+    this.calculatePremiums(); 
+  }
+
+  setupSubscriptions(): void {
+    this.billForm.valueChanges.subscribe(() => this.calculatePremiums());
+
+    this.billForm.get('policies.policyholder')?.valueChanges.subscribe(policyholder => {
+      const selectedPolicy = this.policies.find(policy => policy.policyholder === policyholder);
+      if (selectedPolicy) {
+        this.billForm.get('policies')?.patchValue(selectedPolicy, { emitEvent: false });
+        this.calculatePremiums();
       }
     });
-
-    this.billForm.get('policies')?.get('policyholder')?.valueChanges
-      .subscribe(policyholder => {
-        const selectedPolicy = this.policies.find(policy => policy.policyholder === policyholder);
-        if (selectedPolicy) {
-          this.billForm.get('policies')?.patchValue(selectedPolicy);
-          this.calculatePremiums(); // Recalculate premiums when policyholder changes
-        }
-      });
-
-    // Recalculate premiums when fire, rsd, or tax values change
-    this.billForm.get('fire')?.valueChanges.subscribe(() => this.calculatePremiums());
-    this.billForm.get('rsd')?.valueChanges.subscribe(() => this.calculatePremiums());
-    this.billForm.get('tax')?.valueChanges.subscribe(() => this.calculatePremiums());
   }
 
   loadPolicies(): void {
-    this.policyService.viewAllPolicyForBill()
-      .subscribe({
-        next: res => {
-          this.policies = res;
-        },
-        error: error => {
-          console.error('Error loading policies:', error);
-        }
-      });
+    this.policyService.viewAllPolicyForBill().subscribe({
+      next: res => {
+        this.policies = res;
+      },
+      error: error => {
+        console.error('Error loading policies:', error);
+        alert('There was an error loading policies. Please try again.');
+      }
+    });
   }
 
   calculatePremiums(): void {
-    const formValues = this.billForm.value;
-    const sumInsured = formValues.policies.sumInsured || 0;
-    const fireRate = formValues.fire || 0;
-    const rsdRate = formValues.rsd || 0;
-    const taxRate = formValues.tax || 0;
+    const fireRate = Math.round((this.billForm.get('fire')?.value || 0) * 100) / 100; 
+    const rsdRate = Math.round((this.billForm.get('rsd')?.value || 0) * 100) / 100; 
+    const sumInsured = this.billForm.get('policies.sumInsured')?.value || 0;
+    const taxRate = Math.round((this.billForm.get('tax')?.value || 15) * 100) / 100; 
 
-    const netPremium = (sumInsured * fireRate + sumInsured * rsdRate);
-    const grossPremium = netPremium + (netPremium * taxRate);
+    if (fireRate > 100 || rsdRate > 100 || taxRate > 100) {
+      alert('Rates must be less than or equal to 100%.');
+      return;
+    }
+
+    const netPremium = sumInsured * (fireRate + rsdRate) / 100;
+    const tax = netPremium * taxRate / 100;
+    const grossPremium = netPremium + tax;
 
     this.billForm.patchValue({
       netPremium: netPremium,
       grossPremium: grossPremium
-    }, { emitEvent: false });
+    }, { emitEvent: false }); 
   }
 
   createBill(): void {
-    const formValues = this.billForm.value;
+    if (this.billForm.invalid) {
+      alert('Please fill in all required fields correctly.');
+      return;
+    }
 
+    const formValues = this.billForm.value;
     this.bill.fire = formValues.fire;
     this.bill.rsd = formValues.rsd;
     this.bill.netPremium = formValues.netPremium;
     this.bill.tax = formValues.tax;
     this.bill.grossPremium = formValues.grossPremium;
-    this.bill.policy = formValues.policies;
 
-    this.billService.createBill(this.bill)
-      .subscribe({
-        next: res => {
-          this.loadPolicies();
-          this.billForm.reset();
-          this.router.navigate(['viewbill']);
-        },
-        error: error => {
-          console.error('Error creating bill:', error);
-        }
-      });
+    const selectedPolicy = this.policies.find(policy => policy.policyholder === formValues.policies.policyholder);
+    if (!selectedPolicy) {
+      alert('Policy not found. Please select a valid policyholder.');
+      return;
+    }
+    this.bill.policy = selectedPolicy;
+
+    this.billService.createBill(this.bill).subscribe({
+      next: () => {
+        this.billForm.reset();
+        this.router.navigate(['viewbill']);
+      },
+      error: error => {
+        console.error('Error creating bill:', error);
+        alert('There was an error creating the bill. Please try again.');
+      }
+    });
   }
-
 }

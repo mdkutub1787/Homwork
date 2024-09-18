@@ -3,6 +3,7 @@ package com.kutub.InsuranceManagement.restcontroller;
 import com.kutub.InsuranceManagement.entity.Policy;
 import com.kutub.InsuranceManagement.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,4 +44,7 @@ public class PolicyController {
     public Policy getPolicyById(@PathVariable ("id") int id){
         return   policyService.findById(id);
     }
+
+
+
 }
