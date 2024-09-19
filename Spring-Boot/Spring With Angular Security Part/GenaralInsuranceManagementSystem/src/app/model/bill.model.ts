@@ -9,6 +9,6 @@ export class BillModel {
     "tax"!: number;
     "grossPremium"!: number;
 
-    firePolicy!:PolicyModel
+    policy!:PolicyModel
 
 }

@@ -8,7 +8,7 @@ import { PolicyModel } from '../model/policy.model';
 })
 export class PolicyService {
 
-  baseUrl: string = "http://localhost:8080/api/firepolicy/";
+  baseUrl: string = "http://localhost:8080/api/policy/";
 
   constructor(private http: HttpClient) { }
 
@@ -22,6 +22,8 @@ export class PolicyService {
     return this.http.post(this.baseUrl + "save", policy);
   }
 
+  
+
   // Delete a policy by ID
   deletePolicy(id: number): Observable<any> {
     return this.http.delete(this.baseUrl + "delete/" + id);
@@ -34,7 +36,7 @@ export class PolicyService {
 
   // Get a policy by ID
   getByPolicyId(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}${id}`);
   }
   viewAllPolicyForBill(): Observable<PolicyModel[]> {
     return this.http.get<PolicyModel[]>(this.baseUrl)

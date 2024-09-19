@@ -32,12 +32,12 @@ public class SecurityConfig {
                         .authorizeHttpRequests(
 
                                 req ->
-                                        req.requestMatchers("/login", "/register", "api/firepolicy/", "api/firebill/","api/receipt/","api/firepolicy/save", "api/firebill/save")
+                                        req.requestMatchers("/login", "/register", "api/policy/", "api/bill/","api/receipt/","api/policy/save","api/bill/save","api/receipt/save", "/activate/**")
                                                 .permitAll()
-                                                .requestMatchers("api/firepolicy/save", "api/firebill/save")
+                                                .requestMatchers("api/bill/save", "api/receipt/save")
                                                 .hasAuthority("ADMIN")
-                                                .requestMatchers("api/firepolicy/{id}", "api/firebill/{id}","api/firepolicy/all/**", "api/firepolicy/")
-                                                .hasAnyAuthority("ADMIN")
+                                                .requestMatchers("api/bill/{id}", "api/receipt/{id}","api/bill/all/**")
+                                                .hasAnyAuthority("ADMIN", "BILL")
                                                 .requestMatchers("api/user/**")
                                                 .hasAuthority("USER")
 

@@ -35,6 +35,12 @@ public class User implements UserDetails {
     private String gender;
 
 
+    @Column(nullable = false)
+    private boolean active;
+    @Column()
+    private boolean isLock;
+
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -64,7 +70,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isLock;
     }
 
     @Override
@@ -74,6 +80,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return active;
     }
 }

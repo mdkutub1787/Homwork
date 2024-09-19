@@ -29,11 +29,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("AUTHORIZATION");
+        String authHeader=request.getHeader("AUTHORIZATION");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             // If no token found or token format is incorrect, proceed with the filter chain
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request,response);
             return;
         }
 
@@ -41,13 +41,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = jwtService.extractUsername(token);
 
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // Load user details by username from userDetailsService
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             // Validate token and user details
-            if (jwtService.isValid(token, userDetails)) {
+            if(jwtService.isValid(token, userDetails)) {
                 // If token is valid, create authentication token
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()

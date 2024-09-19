@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { BillModel } from '../model/bill.model';
+import { PolicyModel } from '../model/policy.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BillService {
-  baseUrl: string = "http://localhost:8080/api/firebill/";
+  baseUrl: string = "http://localhost:8080/api/bill/";
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +16,7 @@ export class BillService {
     return this.http.get<BillModel[]>(this.baseUrl);
   }
 
-  getAllBillForReciept(): Observable<BillModel[]> {
+  getAllBillForReceipt(): Observable<BillModel[]> {
     return this.http.get<BillModel[]>(this.baseUrl)
      
   }
@@ -36,5 +37,15 @@ export class BillService {
   getByBillId(billId: number): Observable<BillModel> {
     return this.http.get<BillModel>(`${this.baseUrl}${billId}`);
   }
+
+  // searchByPolicyHolder(policyholder: string): Observable<PolicyModel[]> {
+  //   return this.http.get<PolicyModel[]>(this.baseUrl + "/searchpolicyholder?policyholder=" + policyholder);
+  // }
+  
+  searchByPolicyHolder(policyholder: string): Observable<PolicyModel[]> {
+    return this.http.get<PolicyModel[]>(`search?policyholder=${policyholder}`);
+  }
+  
+  
   
 }

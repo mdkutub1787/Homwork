@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { PolicyModel } from '../../model/policy.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BillModel } from '../../model/bill.model';
+import { PolicyModel } from '../../model/policy.model';
+import { ReceiptModel } from '../../model/receipt.model';
 import { BillService } from '../../service/bill.service';
 import { PolicyService } from '../../service/policy.service';
-import { Router } from '@angular/router';
-import { ReceiptModel } from '../../model/receipt.model';
 import { ReceiptService } from '../../service/receipt.service';
 
 @Component({
   selector: 'app-createreceipt',
   templateUrl: './createreceipt.component.html',
-  styleUrl: './createreceipt.component.css'
+  styleUrls: ['./createreceipt.component.css']
 })
-export class CreatereceiptComponent implements OnInit{
+export class CreatereceiptComponent implements OnInit {
 
   policies: PolicyModel[] = [];
-  billForm!: FormGroup;
   bill: BillModel[] = [];
-  reciept: ReceiptModel = new ReceiptModel();
+  receipt: ReceiptModel = new ReceiptModel();
   receiptForm!: FormGroup;
   selectedBill?: BillModel;
-
-
 
   constructor(
     private receiptService: ReceiptService,
@@ -33,72 +30,66 @@ export class CreatereceiptComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    // const currentDate = new Date().toISOString().substring(0, 10); // Format as YYYY-MM-DD
     this.loadPolicies();
     this.loadBills();
 
+    // Form definition
     this.receiptForm = this.formBuilder.group({
-      id: [''],
       bill: this.formBuilder.group({
-        fire: [undefined],
-        rsd: [undefined],
-        netPremium: [undefined],
-        tax: [undefined],
-        grossPremium: [undefined],
-
+        id: [null],
+        fire: [null],
+        rsd: [null],
+        netPremium: [null],
+        tax: [null],
+        grossPremium: [null],
         policies: this.formBuilder.group({
-          id: [undefined],
-          billNo: [undefined],
-          date: [undefined],
-          bankName: [undefined],
-          policyholder: [undefined],
-          address: [undefined],
-          sumInsured: [undefined],
-          stockInsured: [undefined],
-          interestInsured: [undefined],
-          coverage: [undefined],
-          location: [undefined],
-          construction: [undefined],
-          owner: [undefined],
-          usedAs: [undefined],
-          periodFrom: [undefined],
-          periodTo: [undefined],
+          id: [null],
+          date: [null],
+          bankName: [null],
+          policyholder: [null],
+          address: [null],
+          sumInsured: [null],
+          stockInsured: [null],
+          interestInsured: [null],
+          coverage: [null],
+          location: [null],
+          construction: [null],
+          owner: [null],
+          usedAs: [null],
+          periodFrom: [null],
+          periodTo: [null],
         })
       })
     });
 
-
-
+    // Subscribe to policyholder field change
     this.receiptForm.get('bill.policies.policyholder')?.valueChanges
       .subscribe(policyholder => {
-        this.selectedBill = this.bill.find(bill => bill.firePolicy.policyholder === policyholder);
-        console.log(this.selectedBill);
+        this.selectedBill = this.bill.find(bill => bill.policy.policyholder === policyholder);
         if (this.selectedBill) {
+          // Patch bill data into the form
           this.receiptForm.patchValue({
             bill: {
               ...this.receiptForm.get('bill')?.value,
+              id: this.selectedBill.id,
               fire: this.selectedBill.fire,
               rsd: this.selectedBill.rsd,
               netPremium: this.selectedBill.netPremium,
               tax: this.selectedBill.tax,
               grossPremium: this.selectedBill.grossPremium,
-              policies: this.selectedBill.firePolicy
+              policies: this.selectedBill.policy
             }
           }, { emitEvent: false });
-        
         }
       });
-
-
-
   }
 
+  // Load all policies for bills
   loadPolicies(): void {
     this.policyService.viewAllPolicyForBill()
       .subscribe({
         next: res => {
           this.policies = res;
-          console.log(this.policies)
         },
         error: error => {
           console.error('Error loading policies:', error);
@@ -106,8 +97,9 @@ export class CreatereceiptComponent implements OnInit{
       });
   }
 
+  // Load all bills for receipt
   loadBills(): void {
-    this.billService.getAllBillForReciept()
+    this.billService.getAllBillForReceipt()
       .subscribe({
         next: res => {
           this.bill = res;
@@ -118,15 +110,17 @@ export class CreatereceiptComponent implements OnInit{
       });
   }
 
-
-
+  // Create receipt
   createReceipt(): void {
     if (this.receiptForm.valid) {
       const formValues = this.receiptForm.value;
-      this.reciept.fireBill = formValues.bill;
-      this.receiptService.createReciept(this.reciept)
+      this.receipt.bill = formValues.bill;
+
+      this.receiptService.createReceipt(this.receipt)
         .subscribe({
           next: res => {
+            // Assume the response contains the created receipt with the auto-generated id
+            this.receipt = res;
             this.loadPolicies();
             this.loadBills();
             this.receiptForm.reset();
@@ -140,5 +134,4 @@ export class CreatereceiptComponent implements OnInit{
       console.warn('Form is invalid');
     }
   }
-
 }

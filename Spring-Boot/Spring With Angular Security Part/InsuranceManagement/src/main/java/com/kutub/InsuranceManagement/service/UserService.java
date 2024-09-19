@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private  UserRepository userRepository;
 
 
     @Override
@@ -20,4 +20,5 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(
                         ()->  new UsernameNotFoundException("User Not Found With this Email Address"));
     }
+
 }
