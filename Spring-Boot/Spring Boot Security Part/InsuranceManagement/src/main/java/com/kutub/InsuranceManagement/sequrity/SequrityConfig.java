@@ -34,16 +34,14 @@ public class SequrityConfig {
                         .authorizeHttpRequests(
 
                                 req ->
-                                        req.requestMatchers("api/medicinegeneric/{id}","/login", "/register", "/register/admin", "/register/bill","api/medicine/", "api/medicinegeneric/",
-                                                        "api/pharmacist/","api/medicine/save","api/medicinegeneric/save","api/pharmacist/save","api/medicinegeneric/delete/{id}",
-                                                        "api/customer/","api/customer/save","/activate/**","api/medicinegeneric/update/{id}","api/product/m/searchmedicine?genericName",
-                                                        "api/medicine/delete/{id}","api/medicine/update/{id}","api/salesorder/","api/salesorder/save",
-                                                        "api/pharmacist/delete/{id}","api/pharmacist/update/{id}","api/salesmedicine/","api/salesmedicine/save")
+                                        req.requestMatchers("/login", "/register", "/register/admin", "/register/bill","api/policy/", "api/policy/save","api/policy/delete/{id}","api/policy/{id}","api/policy/update/{id}",
+                                                        "api/bill/","api/bill/save","api/bill/delete/{id}","api/bill/update/{id}","api/bill/{id}",
+                                                        "api/receipt/","api/receipt/save","api/bill/delete/{id}","api/receipt/{id}")
                                                 .permitAll()
-                                                .requestMatchers("api/medicine/save", "api/medicinegeneric/save")
+                                                .requestMatchers("api/bill/save", "api/receipt/save")
                                                 .hasAuthority("ADMIN")
-                                                .requestMatchers( "api/medicine/{id}","api/pharmacist/all/**", "api/location/")
-                                                .hasAnyAuthority("ADMIN", "PHARMACIST")
+                                                .requestMatchers( "api/bill/{id}","api/bill/all/**", "api/policy/")
+                                                .hasAnyAuthority("ADMIN", "BILL")
                                                 .requestMatchers("api/user/**")
                                                 .hasAuthority("USER")
                                                 .requestMatchers("/images/**").permitAll()
