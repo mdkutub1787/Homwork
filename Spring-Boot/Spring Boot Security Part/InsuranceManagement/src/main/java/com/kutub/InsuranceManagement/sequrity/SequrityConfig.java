@@ -36,7 +36,8 @@ public class SequrityConfig {
                                 req ->
                                         req.requestMatchers("/login", "/register", "/register/admin", "/register/bill","api/policy/", "api/policy/save","api/policy/delete/{id}","api/policy/{id}","api/policy/update/{id}",
                                                         "api/bill/","api/bill/save","api/bill/delete/{id}","api/bill/update/{id}","api/bill/{id}",
-                                                        "api/receipt/","api/receipt/save","api/bill/delete/{id}","api/receipt/{id}")
+                                                        "api/receipt/","api/receipt/save","api/receipt/delete/{id}","api/receipt/{id}",
+                                                        "api/moneyreceipt/","api/moneyreceipt/save","api/moneyreceipt/delete/{id}","api/moneyreceipt/{id}")
                                                 .permitAll()
                                                 .requestMatchers("api/bill/save", "api/receipt/save")
                                                 .hasAuthority("ADMIN")
