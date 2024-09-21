@@ -18,8 +18,6 @@ public class MoneyReceipt {
 
     private String issuingOffice;
 
-    private int moneyReceiptNo;
-
     private String classOfInsurance;
 
     private String date;

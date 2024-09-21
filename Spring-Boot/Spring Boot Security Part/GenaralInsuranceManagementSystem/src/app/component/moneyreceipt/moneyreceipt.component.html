@@ -29,7 +29,7 @@
                     <th><i class="fas fa-user"></i> Policy Holder</th>
                     <th><i class="fas fa-map-marker-alt"></i> Address</th>
                     <th><i class="fas fa-coins"></i> Net Premium</th>
-                    <th><i class="fas fa-coins"></i>VAT</th>
+                    <th><i class="fas fa-coins"></i>VAT </th>
                     <th><i class="fas fa-wallet"></i> Gross Premium</th>
                     <th class="text-center"><i class="fas fa-cogs"></i> Action</th>
                 </tr>
@@ -41,7 +41,7 @@
                     <td>{{ mr.bill?.policy?.policyholder }}</td>
                     <td>{{ mr.bill?.policy?.address }}</td>
                     <td>{{ mr.bill?.netPremium | currency:'TK':'symbol'}}</td>
-                    <td>{{ mr.bill?.tax | currency:'TK':'symbol'}}</td>
+                    <td>{{ mr.bill?.tax | currency:'%':'symbol'}}</td>
                     <td>{{ mr.bill?.grossPremium | currency:'TK':'symbol'}}</td>
 
 

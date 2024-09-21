@@ -41,7 +41,6 @@ export class CreatemoneyreceiptComponent implements OnInit {
     this.moneyreceiptForm = this.formBuilder.group({
       id: [null],
       issuingOffice: [null],
-      moneyReceiptNo: [null],
       classOfInsurance: [null],
       date: [formattedDate],
       modeOfPayment: [null],
@@ -127,7 +126,7 @@ export class CreatemoneyreceiptComponent implements OnInit {
   
       
       this.moneyreceipt.issuingOffice = formValues.issuingOffice;
-      this.moneyreceipt.moneyReceiptNo = formValues.moneyReceiptNo;
+      this.moneyreceipt.id = formValues.id;
       this.moneyreceipt.classOfInsurance = formValues.classOfInsurance;
       this.moneyreceipt.date = formValues.date;
       this.moneyreceipt.modeOfPayment = formValues.modeOfPayment;
