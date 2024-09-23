@@ -51,7 +51,7 @@ public class BillController {
     }
 
     // Search bills by policyholder
-    @GetMapping("/search")
+    @GetMapping("/searchpolicyholder")
     public List<Bill> getBillsByPolicyholder(@RequestParam String policyholder) {
         return billService.getBillsByPolicyholder(policyholder);
     }

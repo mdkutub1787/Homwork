@@ -1,8 +1,10 @@
 package com.kutub.InsuranceManagement.restcontroller;
 
+import com.kutub.InsuranceManagement.entity.Bill;
 import com.kutub.InsuranceManagement.entity.Policy;
 import com.kutub.InsuranceManagement.service.PolicyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +48,17 @@ public class PolicyController {
     }
 
 
+
+    // Search policy by policyholder
+    @GetMapping("/searchpolicyholder")
+    public List<Policy> getPolicyByPolicyHolder(@RequestParam String policyholder) {
+        return policyService.searchPolicyByPolicyHolder(policyholder);
+    }
+
+    // Search policy by bank name
+    @GetMapping("/searchbankname")
+    public List<Policy> getPolicyByBankName(@RequestParam String bankname) {
+        return policyService.searchPolicyByBankName(bankname);
+    }
 
 }

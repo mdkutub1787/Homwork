@@ -1,4 +1,5 @@
-package com.kutub.InsuranceManagement.sequrity;
+package com.kutub.InsuranceManagement.Security;
+
 
 import com.kutub.InsuranceManagement.jwt.JwtAuthenticationFilter;
 import com.kutub.InsuranceManagement.service.UserService;
@@ -19,8 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-
-public class SequrityConfig {
+public class SecurityConfig {
 
     private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -34,20 +34,14 @@ public class SequrityConfig {
                         .authorizeHttpRequests(
 
                                 req ->
-                                        req.requestMatchers("/login", "/register", "/register/admin","/activate/**",
-                                                        "api/policy/","api/policy/save","api/policy/delete/{id}","api/policy/update/{id}","api/policy/{id}",
-                                                        "api/bill/","api/bill/save","api/bill/delete/{id}","api/bill/update/{id}","api/bill/{id}",
-                                                        "api/receipt/","api/receipt/save","api/receipt/delete/{id}","api/receipt/{id}",
-                                                        "api/moneyreceipt/","api/moneyreceipt/save","api/moneyreceipt/delete/{id}","api/moneyreceipt/{id}","api/policy/search/policyholder/{policyholder}"
-                                                )
+                                        req.requestMatchers("/login", "/register", "api/firepolicy/", "api/firebill/","/activate/**")
                                                 .permitAll()
-                                                .requestMatchers("api/medicine/save", "api/medicinegeneric/save")
+                                                .requestMatchers("api/firepolicy/save", "api/firebill/save")
                                                 .hasAuthority("ADMIN")
-                                                .requestMatchers( "api/medicine/{id}","api/pharmacist/all/**", "api/location/")
-                                                .hasAnyAuthority("ADMIN", "PHARMACIST")
+                                                .requestMatchers("api/firepolicy/{id}", "api/firebill/{id}","api/firepolicy/all/**", "api/firepolicy/")
+                                                .hasAnyAuthority("ADMIN")
                                                 .requestMatchers("api/user/**")
                                                 .hasAuthority("USER")
-                                                .requestMatchers("/images/**").permitAll()
 
                         )
                         .userDetailsService(userService)
@@ -61,6 +55,8 @@ public class SequrityConfig {
 
     }
 
+
+
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -71,6 +67,5 @@ public class SequrityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
 
 }

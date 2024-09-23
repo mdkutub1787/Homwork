@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "bills")
-public class Bill {
+@Table(name = "firebills")
+public class FireBill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +34,19 @@ public class Bill {
     @Column(nullable = false)
     private double grossPremium;
 
-    // Many Bills can belong to one Policy
+    // A FireBill is associated with one FirePolicy
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "policyId", nullable = false)  // Foreign key for Policy entity
-    private Policy policy;
+    @JoinColumn(name = "firePolicyId", nullable = false)  // FirePolicy foreign key
+    private FirePolicy firePolicy;
 
+    // A FireBill can have many receipts, and receipts are mapped by the "fireBill" field in the Receipt entity
     @JsonIgnore
-    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "fireBill", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Receipt> receipts;
 
-
+    // Additional utility method to handle adding a receipt to the FireBill
+    public void addReceipt(Receipt receipt) {
+        receipts.add(receipt);
+        receipt.setFireBill(this);
+    }
 }

@@ -29,7 +29,7 @@
                             <strong>Stock Insured:</strong> <span>{{ policy.stockInsured }}</span>
                         </div>
                         <div class="data-row">
-                            <strong>Sum Insured:</strong> <span>{{ policy.sumInsured }}</span>
+                            <strong>Sum Insured:</strong> <span>{{ policy.sumInsured | currency:'TK ':'symbol' }}</span>
                         </div>
                         <div class="data-row">
                             <strong>Interest Insured:</strong> <span>{{ policy.interestInsured }}</span>

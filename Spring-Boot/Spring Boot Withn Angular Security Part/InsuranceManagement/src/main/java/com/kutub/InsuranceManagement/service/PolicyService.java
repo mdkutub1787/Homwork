@@ -1,5 +1,6 @@
 package com.kutub.InsuranceManagement.service;
 
+import com.kutub.InsuranceManagement.entity.Bill;
 import com.kutub.InsuranceManagement.entity.Policy;
 import com.kutub.InsuranceManagement.repository.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,14 @@ public class PolicyService {
     }
 
 
+    // Find policy by policyholder name
+    public List<Policy> searchPolicyByPolicyHolder(String policyholder) {
+        return policyRepository.findByPolicyHolder(policyholder);
+    }
+
+    // Search policies by bank name
+    public List<Policy> searchPolicyByBankName(String bankname) {
+        return policyRepository.findByBankName(bankname);
+    }
 
 }

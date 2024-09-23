@@ -25,58 +25,36 @@ export class CreatebillComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initializeForm();
     this.loadPolicies();
+    this.setupSubscriptions();
+  }
 
-    // Initialize form with validation and calculation logic
+  initializeForm(): void {
     this.billForm = this.formBuilder.group({
-      fire: [''],
-      rsd: [''],
-      netPremium:  [''], 
-      tax: ['15'], // Tax is set to 15%
-      grossPremium: [''], 
+      fire: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+      rsd: [null, [Validators.required, Validators.min(0), Validators.max(100)]],
+      netPremium: [{ value: 0, }],
+      tax: [15, [Validators.min(0), Validators.max(100)]],
+      grossPremium: [{ value: 0,  }],
       policies: this.formBuilder.group({
-        id: [undefined],
-        billNo: [undefined],
-        date: [],
-        bankName: [undefined],
-        policyholder: [undefined],
-        address: [undefined],
-        sumInsured: [undefined],
-        stockInsured: [undefined],
-        interestInsured: [undefined],
-        coverage: [undefined],
-        location: [undefined],
-        construction: [undefined],
-        owner: [undefined],
-        usedAs: [undefined],
-        periodFrom: ['', Validators.required],
-        periodTo: [{ value: '' }]
+        policyholder: [null, Validators.required],
+        address: [null, Validators.required],
+        sumInsured: [null, Validators.required]
       })
     });
 
-    // Trigger recalculation on any change in fire, rsd, tax, or sumInsured
-    ['fire', 'rsd', 'tax', 'policies.sumInsured'].forEach(field => {
-      this.billForm.get(field)?.valueChanges.subscribe(() => this.calculatePremiums());
-    });
+    this.calculatePremiums(); 
+  }
 
-    // Subscribe to periodFrom changes to update periodTo
-    this.billForm.get('periodFrom')?.valueChanges.subscribe(value => {
-      if (value) {
-        const periodFromDate = new Date(value);
-        const periodToDate = new Date(periodFromDate);
-        periodToDate.setFullYear(periodFromDate.getFullYear() + 1);
-        this.billForm.patchValue({
-          periodTo: periodToDate.toISOString().substring(0, 10) // Format as YYYY-MM-DD
-        }, { emitEvent: false });
-      }
-    });
+  setupSubscriptions(): void {
+    this.billForm.valueChanges.subscribe(() => this.calculatePremiums());
 
-    // Subscribe to policyholder changes and update related fields
     this.billForm.get('policies.policyholder')?.valueChanges.subscribe(policyholder => {
       const selectedPolicy = this.policies.find(policy => policy.policyholder === policyholder);
       if (selectedPolicy) {
-        this.billForm.get('policies')?.patchValue(selectedPolicy);
-        this.calculatePremiums(); // Recalculate premiums when policyholder changes
+        this.billForm.get('policies')?.patchValue(selectedPolicy, { emitEvent: false });
+        this.calculatePremiums();
       }
     });
   }
@@ -88,48 +66,60 @@ export class CreatebillComponent implements OnInit {
       },
       error: error => {
         console.error('Error loading policies:', error);
+        alert('There was an error loading policies. Please try again.');
       }
     });
   }
 
   calculatePremiums(): void {
-    const formValues = this.billForm.value;
-    const sumInsured = parseFloat(formValues.policies.sumInsured) || 0;
-    const fireRate = parseFloat(formValues.fire) / 100 || 0; // Convert percentage to decimal
-    const rsdRate = parseFloat(formValues.rsd) / 100 || 0; // Convert percentage to decimal
-    const taxRate = parseFloat(formValues.tax) || 0;
+    const fireRate = Math.round((this.billForm.get('fire')?.value || 0) * 100) / 100; 
+    const rsdRate = Math.round((this.billForm.get('rsd')?.value || 0) * 100) / 100; 
+    const sumInsured = this.billForm.get('policies.sumInsured')?.value || 0;
+    const taxRate = Math.round((this.billForm.get('tax')?.value || 15) * 100) / 100; 
 
-    // Calculating net and gross premiums
-    const netPremium = sumInsured * (fireRate + rsdRate);
-    const grossPremium = netPremium + (netPremium * taxRate);
+    if (fireRate > 100 || rsdRate > 100 || taxRate > 100) {
+      alert('Rates must be less than or equal to 100%.');
+      return;
+    }
 
-    // Update form fields with the calculated premiums
+    const netPremium = sumInsured * (fireRate + rsdRate) / 100;
+    const tax = netPremium * taxRate / 100;
+    const grossPremium = netPremium + tax;
+
     this.billForm.patchValue({
-      netPremium: netPremium.toFixed(2),
-      grossPremium: grossPremium.toFixed(2)
-    }, { emitEvent: false });
+      netPremium: netPremium,
+      grossPremium: grossPremium
+    }, { emitEvent: false }); 
   }
 
   createBill(): void {
-    const formValues = this.billForm.value;
+    if (this.billForm.invalid) {
+      alert('Please fill in all required fields correctly.');
+      return;
+    }
 
-    // Map form values to bill model
+    const formValues = this.billForm.value;
     this.bill.fire = formValues.fire;
     this.bill.rsd = formValues.rsd;
     this.bill.netPremium = formValues.netPremium;
     this.bill.tax = formValues.tax;
     this.bill.grossPremium = formValues.grossPremium;
-    this.bill.policy = formValues.policies;
 
-    // Call service to create bill
+    const selectedPolicy = this.policies.find(policy => policy.policyholder === formValues.policies.policyholder);
+    if (!selectedPolicy) {
+      alert('Policy not found. Please select a valid policyholder.');
+      return;
+    }
+    this.bill.policy = selectedPolicy;
+
     this.billService.createBill(this.bill).subscribe({
-      next: res => {
-        this.loadPolicies(); // Reload policies after creating the bill
-        this.billForm.reset(); // Reset form after success
-        this.router.navigate(['viewbill']); // Navigate to the bill view page
+      next: () => {
+        this.billForm.reset();
+        this.router.navigate(['viewbill']);
       },
       error: error => {
         console.error('Error creating bill:', error);
+        alert('There was an error creating the bill. Please try again.');
       }
     });
   }
