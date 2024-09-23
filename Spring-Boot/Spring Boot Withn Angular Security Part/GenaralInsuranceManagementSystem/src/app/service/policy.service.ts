@@ -10,6 +10,8 @@ export class PolicyService {
 
   baseUrl: string = "http://localhost:8080/api/policy/";
 
+  private newpolicy: PolicyModel[] = []; 
+
   constructor(private http: HttpClient) { }
 
   // View all policies
@@ -21,8 +23,6 @@ export class PolicyService {
   createPolicy(policy: PolicyModel): Observable<any> {
     return this.http.post(this.baseUrl + "save", policy);
   }
-
-  
 
   // Delete a policy by ID
   deletePolicy(id: number): Observable<any> {
@@ -38,18 +38,21 @@ export class PolicyService {
   getByPolicyId(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}${id}`);
   }
+
+  // View all policies for bill (typed Observable)
   viewAllPolicyForBill(): Observable<PolicyModel[]> {
-    return this.http.get<PolicyModel[]>(this.baseUrl)
-    
+    return this.http.get<PolicyModel[]>(this.baseUrl);
   }
 
-  getPolicyByPolicyHolder(policyholder: string): Observable<PolicyModel[]> {
-    return this.http.get<PolicyModel[]>(`${this.baseUrl}/searchpolicyholder?policyholder/${policyholder}`);
+  // Filter policies by policyholder or bankName on the client-side 
+ searchByPolicyHolderAndBankName(searchTerm: string): PolicyModel[] {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase(); 
+
+    return this.newpolicy.filter(item =>
+      (item.policyholder?.toLowerCase().includes(lowerCaseSearchTerm) ||   
+      item.bankName?.toLowerCase().includes(lowerCaseSearchTerm))     
+    );
   }
 
-  getPolicyByBankName(bankName: string): Observable<PolicyModel[]> {
-    return this.http.get<PolicyModel[]>(`${this.baseUrl}/searchbankname?bankname/${bankName}`);
-  }
-  
- 
+
 }

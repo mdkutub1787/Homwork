@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserModel } from '../model/user.model';
 import { AuthService } from '../service/auth.service';
 
 
@@ -12,47 +11,58 @@ import { AuthService } from '../service/auth.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  regForm!: FormGroup;
+  registerForm: FormGroup;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private formBuilder: FormBuilder
-  ) { }
-
-
-  ngOnInit(): void {
-    this.regForm = this.formBuilder.group({
+    private router: Router
+  ) {
+    this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      role: ['User', Validators.required],
-      photo: ['', Validators.required],
- 
-    })
-
+      confirmPassword: ['', Validators.required],
+      cell: [''],
+      address: [''],
+      dob: [''],
+      gender: [''],
+      role:[''],
+     
+    }
+    ,{ validators: this.passwordMatchValidator });
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
-  onSubmit(): void {
-    if (this.regForm.valid) {
-      const user: UserModel = this.regForm.value;
-      this.authService.registration(user)
-        .subscribe({
-          next: res => {
-            console.log('User registered successfully:', res);
-            this.authService.storeToken(res.token);
-            this.router.navigate(['login'])
-          },
-          error: (err) => {
-            console.error('Error registering user:', err);
-          }
-        });
-    }
-    else {
-      alert("Complte mandatory Field");
-    }
-
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
   }
 
+  onSubmit() {
+    if (this.registerForm.invalid) {
+      return;
+    }
 
+    const { name, email, password, cell, address, dob, gender, image, } = this.registerForm.value;
+
+    this.authService.register({ name, email, password, cell, address, dob, gender }).subscribe(
+   {
+
+    next: AuthResponse => {
+      this.successMessage = 'Registration successful! Please check your email to activate your account.';
+      this.router.navigate(['/login']);
+    },
+    error:error => {
+      this.errorMessage = 'Registration failed. Please try again.';
+    }
+
+   }
+    );
+  }
 }

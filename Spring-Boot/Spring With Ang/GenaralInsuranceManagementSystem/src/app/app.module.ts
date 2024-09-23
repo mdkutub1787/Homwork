@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +17,6 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 import { LogoutComponent } from './logout/logout.component';
-import { NavbarComponent } from './guard/navbar/navbar.component';
 import { CreatepolicyComponent } from './component/createpolicy/createpolicy.component';
 import { UpdatepolicyComponent } from './component/updatepolicy/updatepolicy.component';
 import { BillComponent } from './component/bill/bill.component';
@@ -27,6 +26,11 @@ import { CreatereceiptComponent } from './component/createreceipt/createreceipt.
 import { ReceiptComponent } from './component/receipt/receipt.component';
 import { PrintreceiptComponent } from './component/printreceipt/printreceipt.component';
 import { PolicydetailsComponent } from './component/policydetails/policydetails.component';
+import { MoneyreceiptComponent } from './component/moneyreceipt/moneyreceipt.component';
+import { CreatemoneyreceiptComponent } from './component/createmoneyreceipt/createmoneyreceipt.component';
+import { PrintmoneyreceiptComponent } from './component/printmoneyreceipt/printmoneyreceipt.component';
+import { TokenInterceptor } from './guard/TokenInterceptor';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -38,7 +42,6 @@ import { PolicydetailsComponent } from './component/policydetails/policydetails.
     LoginComponent,
     UserprofileComponent,
     LogoutComponent,
-    NavbarComponent,
     CreatepolicyComponent,
     UpdatepolicyComponent,
     BillComponent,
@@ -47,7 +50,13 @@ import { PolicydetailsComponent } from './component/policydetails/policydetails.
     CreatereceiptComponent,
     ReceiptComponent,
     PrintreceiptComponent,
-    PolicydetailsComponent
+    PolicydetailsComponent,
+    MoneyreceiptComponent,
+    CreatemoneyreceiptComponent,
+    PrintmoneyreceiptComponent,
+    NavbarComponent,
+    
+ 
   ],
   imports: [
     BrowserModule,
@@ -65,7 +74,10 @@ import { PolicydetailsComponent } from './component/policydetails/policydetails.
   providers: [
     // provideClientHydration(),
     // provideAnimationsAsync(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch()
+    ),
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

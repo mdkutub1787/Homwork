@@ -1,22 +1,18 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateFn, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
-
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AuthGuard implements CanActivate {
-
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) { }
-
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
   canActivate(): boolean {
-    if (this.authService.isAuthenticated()) {
-      console.log(this.authService.getToken())
+    if (this.authService.isLoggedIn()) {
       return true;
     } else {
       this.router.navigate(['/login']);
@@ -24,5 +20,5 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-
-};
+  
+}
