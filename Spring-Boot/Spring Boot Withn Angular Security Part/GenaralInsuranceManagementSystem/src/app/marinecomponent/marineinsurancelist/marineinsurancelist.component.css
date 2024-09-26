@@ -95,7 +95,7 @@
   .search-pill {
     width: 40%;
     padding: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 50px; /* This creates the pill shape */
     outline: none;

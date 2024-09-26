@@ -16,6 +16,7 @@ public class MoneyReceiptService {
 
     @Autowired
     private MoneyReceiptRepository moneyReceiptRepository;
+
     @Autowired
     private BillRepository billRepository;
 
@@ -33,11 +34,20 @@ public class MoneyReceiptService {
         }
 
 
-    public MoneyReceipt findById(int id) {
-        return moneyReceiptRepository.findById(id).get();
+    public MoneyReceipt getMoneyReceiptById(int id) {
+        return moneyReceiptRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("MoneyReceipt not found with ID: " + id));
     }
 
     public void deleteMoneyReceipt(int id) {
         moneyReceiptRepository.deleteById(id);
     }
+
+    public void updateMoneyReceipt(MoneyReceipt mr, int id) {
+        moneyReceiptRepository.save(mr);
+
+    }
+
+
+
 }

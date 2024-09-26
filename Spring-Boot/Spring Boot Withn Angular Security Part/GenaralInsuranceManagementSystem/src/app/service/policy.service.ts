@@ -44,15 +44,19 @@ export class PolicyService {
     return this.http.get<PolicyModel[]>(this.baseUrl);
   }
 
-  // Filter policies by policyholder or bankName on the client-side 
- searchByPolicyHolderAndBankName(searchTerm: string): PolicyModel[] {
-    const lowerCaseSearchTerm = searchTerm.toLowerCase(); 
-
-    return this.newpolicy.filter(item =>
-      (item.policyholder?.toLowerCase().includes(lowerCaseSearchTerm) ||   
-      item.bankName?.toLowerCase().includes(lowerCaseSearchTerm))     
-    );
+// Filter policies by policyholder, bankName, or ID  
+searchByPolicyHolderAndBankNameAndId(searchTerm: string): PolicyModel[] {
+  const lowerCaseSearchTerm = searchTerm.trim().toLowerCase();
+  if (!lowerCaseSearchTerm) {
+    return this.newpolicy;
   }
+
+  return this.newpolicy.filter(item => 
+    (item.policyholder?.toLowerCase().includes(lowerCaseSearchTerm) ||  
+     item.bankName?.toLowerCase().includes(lowerCaseSearchTerm) || 
+     item.id?.toString().includes(lowerCaseSearchTerm))
+  );
+}
 
 
 }

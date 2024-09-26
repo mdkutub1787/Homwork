@@ -1,8 +1,11 @@
 package com.kutub.InsuranceManagement.restcontroller;
 
+import com.kutub.InsuranceManagement.entity.Bill;
 import com.kutub.InsuranceManagement.entity.MoneyReceipt;
+import com.kutub.InsuranceManagement.entity.Policy;
 import com.kutub.InsuranceManagement.service.MoneyReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +32,7 @@ public class MoneyReceiptController {
         moneyReceiptService.saveMoneyReceipt(mr);
     }
 
-    // Update a Receipt by ID
+
     @PutMapping("/update/{id}")
     public  void updateMoneyReceipt(@RequestBody MoneyReceipt mr){
         moneyReceiptService.saveMoneyReceipt(mr);
@@ -41,9 +44,12 @@ public class MoneyReceiptController {
         moneyReceiptService.deleteMoneyReceipt(id);
     }
 
+
     @GetMapping("/{id}")
-    public MoneyReceipt getMoneyReceiptById(@PathVariable ("id") int id){
-        return   moneyReceiptService.findById(id);
+    public ResponseEntity<MoneyReceipt> getMoneyReceiptById(@PathVariable int id) {
+        MoneyReceipt mr = moneyReceiptService.getMoneyReceiptById(id);
+        return ResponseEntity.ok(mr);
     }
+
 
 }

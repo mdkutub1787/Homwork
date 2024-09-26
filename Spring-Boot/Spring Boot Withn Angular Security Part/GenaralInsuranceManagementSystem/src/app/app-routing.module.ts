@@ -18,6 +18,9 @@ import { PolicydetailsComponent } from './component/policydetails/policydetails.
 import { MoneyreceiptComponent } from './component/moneyreceipt/moneyreceipt.component';
 import { CreatemoneyreceiptComponent } from './component/createmoneyreceipt/createmoneyreceipt.component';
 import { PrintmoneyreceiptComponent } from './component/printmoneyreceipt/printmoneyreceipt.component';
+import { MarineinsurancedetailsComponent } from './marinecomponent/marineinsurancedetails/marineinsurancedetails.component';
+import { CreatemarineinsurancedetailsComponent } from './marinecomponent/createmarineinsurancedetails/createmarineinsurancedetails.component';
+import { MarineinsurancelistComponent } from './marinecomponent/marineinsurancelist/marineinsurancelist.component';
 
 
 const routes: Routes = [
@@ -36,6 +39,10 @@ const routes: Routes = [
   { path: "viewmoneyreciept", component: MoneyreceiptComponent},
   { path: "createmoneyreciept", component: CreatemoneyreceiptComponent},
   { path: "printmoneyreciept/:id", component: PrintmoneyreceiptComponent},
+  { path: "viewmarinelist", component: MarineinsurancelistComponent},
+  { path: "marinedetails/:id", component: MarineinsurancedetailsComponent },
+  { path: 'createmarinelist', component: CreatemarineinsurancedetailsComponent },
+  { path: 'updatemarinelist/:id', component: CreatemarineinsurancedetailsComponent },
   { path: "reg", component: RegistrationComponent},
   { path: "login", component: LoginComponent},
   { path: "logout", component: LogoutComponent},

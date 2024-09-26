@@ -93,4 +93,17 @@
   .custom-btn:focus {
     box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.2); /* Subtle shadow on focus */
   }
-  
+  .search-pill {
+    width: 40%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 50px; /* This creates the pill shape */
+    outline: none;
+    box-shadow: none;
+}
+
+.search-pill:focus {
+    border-color: #007bff; /* Change this to the color you prefer */
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}

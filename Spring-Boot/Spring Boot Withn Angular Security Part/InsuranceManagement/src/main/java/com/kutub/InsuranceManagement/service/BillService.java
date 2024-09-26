@@ -41,7 +41,6 @@ public class BillService {
     }
 
 
-
     public void deleteBill(int id) {
         billRepository.deleteById(id);
     }

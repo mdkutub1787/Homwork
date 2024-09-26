@@ -11,86 +11,92 @@ import { Router } from '@angular/router';
 })
 export class BillComponent implements OnInit {
 
-  policyes: any;
+  policies: any; // Consider typing this properly if you have a specific type
   bills: BillModel[] = [];
+  filteredBills: BillModel[] = [];
+  searchTerm: string = '';            
+  sortBy: 'policyholder' | 'id' | 'bankName' = 'policyholder'; 
 
   constructor(
-    private policiesService: PolicyService,
+    private policyService: PolicyService,
     private billService: BillService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.policyes = this.policiesService.viewAllPolicyForBill();
+    this.loadPolicies();
+    this.loadBills();
+  }
+
+  private loadPolicies(): void {
+    this.policyService.viewAllPolicyForBill().subscribe({
+      next: (data) => this.policies = data,
+      error: (error) => console.error('Error fetching policies:', error)
+    });
+  }
+
+  private loadBills(): void {
     this.billService.viewAllBill().subscribe({
       next: (data: BillModel[]) => {
         this.bills = data;
+        this.filteredBills = data; // Initialize filteredBills
       },
-      error: (error) => {
-        console.error('Error fetching bills:', error);
-      }
+      error: (error) => console.error('Error fetching bills:', error)
     });
   }
 
   deleteBill(id: number): void {
-    this.billService.deleteBill(id)
-      .subscribe({
-        next: () => {
-          this.refreshBills();
-          this.router.navigate(['/viewbill']);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.billService.deleteBill(id).subscribe({
+      next: () => {
+        this.refreshBills();
+        this.router.navigate(['/viewbill']);
+      },
+      error: (error) => console.error('Error deleting bill:', error)
+    });
   }
 
   private refreshBills(): void {
-    this.billService.viewAllBill().subscribe({
-      next: (data: BillModel[]) => {
-        this.bills = data;
-      },
-      error: (error) => {
-        console.error('Error fetching bills:', error);
-      }
-    });
+    this.loadBills(); // Re-fetch all bills
   }
 
   editBill(bill: BillModel): void {
     this.router.navigate(['/updatebill', bill.id]);
   }
   
-  navigateToAddBill() {
+  navigateToAddBill(): void {
     this.router.navigateByUrl('/createbill');
   }
 
-  navigateToAddReciept() {
+  navigateToAddReceipt(): void {
     this.router.navigateByUrl('/createreciept');
   }
 
+  searchBill(): void {
+    const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
+    this.filteredBills = this.bills.filter(item =>
+      item.policy.policyholder?.toLowerCase().includes(lowerCaseSearchTerm) ||
+      item.policy.bankName?.toLowerCase().includes(lowerCaseSearchTerm) ||
+      item.policy.id?.toString().includes(lowerCaseSearchTerm)
+    );
+  }
+
   getFireAmount(bill: BillModel): number {
-    return Math.round((bill.policy.sumInsured * bill.fire) / 100); // Assuming 'fire' is a percentage
+    return Math.round((bill.policy.sumInsured * bill.fire) / 100);
   }
 
   getRsdAmount(bill: BillModel): number {
-    return Math.round((bill.policy.sumInsured * bill.rsd) / 100); // Assuming 'rsd' is a percentage
+    return Math.round((bill.policy.sumInsured * bill.rsd) / 100);
   }
 
   getNetPremium(bill: BillModel): number {
-    const fireAmount = this.getFireAmount(bill);
-    const rsdAmount = this.getRsdAmount(bill);
-    return Math.round(fireAmount + rsdAmount);
+    return Math.round(this.getFireAmount(bill) + this.getRsdAmount(bill));
   }
 
   getTaxAmount(bill: BillModel): number {
-    const netPremium = this.getNetPremium(bill);
-    return Math.round((netPremium * bill.tax) / 100); // Assuming 'tax' is a percentage
+    return Math.round((this.getNetPremium(bill) * bill.tax) / 100);
   }
 
   getGrossPremium(bill: BillModel): number {
-    const netPremium = this.getNetPremium(bill);
-    const taxAmount = this.getTaxAmount(bill);
-    return Math.round(netPremium + taxAmount);
+    return Math.round(this.getNetPremium(bill) + this.getTaxAmount(bill));
   }
-
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PolicyModel } from '../../model/policy.model';
 import { BillModel } from '../../model/bill.model';
 import { MoneyReceiptModel } from '../../model/moneyreceipt.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MoneyreceiptService } from '../../service/moneyreceipt.service';
 import { BillService } from '../../service/bill.service';
 import { PolicyService } from '../../service/policy.service';
@@ -11,11 +11,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-createmoneyreceipt',
   templateUrl: './createmoneyreceipt.component.html',
-  styleUrl: './createmoneyreceipt.component.css'
+  styleUrls: ['./createmoneyreceipt.component.css']
 })
 export class CreatemoneyreceiptComponent implements OnInit {
-
-
   policies: PolicyModel[] = [];
   bill: BillModel[] = [];
   moneyreceipt: MoneyReceiptModel = new MoneyReceiptModel();
@@ -28,7 +26,7 @@ export class CreatemoneyreceiptComponent implements OnInit {
     private policyService: PolicyService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadPolicies();
@@ -37,37 +35,36 @@ export class CreatemoneyreceiptComponent implements OnInit {
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
 
-  
     this.moneyreceiptForm = this.formBuilder.group({
       id: [null],
-      issuingOffice: [null],
-      classOfInsurance: [null],
-      date: [formattedDate],
-      modeOfPayment: [null],
-      issuedAgainst: [null],
+      issuingOffice: [null, Validators.required],
+      classOfInsurance: [null, Validators.required],
+      date: [formattedDate, Validators.required],
+      modeOfPayment: [null, Validators.required],
+      issuedAgainst: [null, Validators.required],
       bill: this.formBuilder.group({
-        id: [null],
-        fire: [null],
-        rsd: [null],
-        netPremium: [null],
-        tax: [null],
-        grossPremium: [null],
+        id: [null, Validators.required],
+        fire: [null, Validators.required],
+        rsd: [null, Validators.required],
+        netPremium: [null, Validators.required],
+        tax: [null, Validators.required],
+        grossPremium: [null, Validators.required],
         policies: this.formBuilder.group({
-          id: [null],
-          date: [null],
-          bankName: [null],
-          policyholder: [null],
-          address: [null],
-          sumInsured: [null],
-          stockInsured: [null],
-          interestInsured: [null],
-          coverage: [null],
-          location: [null],
-          construction: [null],
-          owner: [null],
-          usedAs: [null],
-          periodFrom: [null],
-          periodTo: [null],
+          id: [null, Validators.required],
+          date: [null, Validators.required],
+          bankName: [null, Validators.required],
+          policyholder: [null, Validators.required],
+          address: [null, Validators.required],
+          sumInsured: [null, Validators.required],
+          stockInsured: [null, Validators.required],
+          interestInsured: [null, Validators.required],
+          coverage: [null, Validators.required],
+          location: [null, Validators.required],
+          construction: [null, Validators.required],
+          owner: [null, Validators.required],
+          usedAs: [null, Validators.required],
+          periodFrom: [null, Validators.required],
+          periodTo: [null, Validators.required],
         })
       })
     });
@@ -123,8 +120,7 @@ export class CreatemoneyreceiptComponent implements OnInit {
   createMoneyReceipt(): void {
     if (this.moneyreceiptForm.valid) {
       const formValues = this.moneyreceiptForm.value;
-  
-      
+
       this.moneyreceipt.issuingOffice = formValues.issuingOffice;
       this.moneyreceipt.id = formValues.id;
       this.moneyreceipt.classOfInsurance = formValues.classOfInsurance;
@@ -132,15 +128,15 @@ export class CreatemoneyreceiptComponent implements OnInit {
       this.moneyreceipt.modeOfPayment = formValues.modeOfPayment;
       this.moneyreceipt.issuedAgainst = formValues.issuedAgainst;
       this.moneyreceipt.bill = formValues.bill;
-  
+
       this.moneyreceiptService.createMoneyReceipt(this.moneyreceipt)
         .subscribe({
           next: res => {
             this.moneyreceipt = res;
             this.loadPolicies();
             this.loadBills();
-            this.moneyreceiptForm.reset(); 
-            this.router.navigate(['viewmoneyreciept']); 
+            this.moneyreceiptForm.reset();
+            this.router.navigate(['viewmoneyreciept']);
           },
           error: error => {
             console.error('Error creating money receipt:', error);
@@ -150,5 +146,4 @@ export class CreatemoneyreceiptComponent implements OnInit {
       console.warn('Form is invalid');
     }
   }
-  
 }

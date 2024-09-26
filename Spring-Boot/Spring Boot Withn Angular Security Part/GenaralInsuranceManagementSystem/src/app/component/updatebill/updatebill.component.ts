@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BillModel } from '../../model/bill.model';
 import { PolicyModel } from '../../model/policy.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PolicyService } from '../../service/policy.service';
 import { BillService } from '../../service/bill.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,9 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-updatebill',
   templateUrl: './updatebill.component.html',
-  styleUrl: './updatebill.component.css'
+  styleUrls: ['./updatebill.component.css']
 })
-export class UpdatebillComponent {
+export class UpdatebillComponent implements OnInit {
 
   bill: BillModel = new BillModel();
   policies: PolicyModel[] = [];
@@ -30,11 +30,11 @@ export class UpdatebillComponent {
     this.billId = this.route.snapshot.params['id'];
     console.log(this.billId);
     this.billForm = this.formBuilder.group({
-      fire: [''],
-      rsd: [''],
-      netPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
-      tax: [''],
-      grossPremium: [{ value: '', disabled: true }], // Disable to prevent manual editing
+      fire: ['', Validators.required],
+      rsd: ['', Validators.required],
+      netPremium: [{ value: '' }, Validators.required], 
+      tax: ['', Validators.required],
+      grossPremium: [{ value: ''}, Validators.required], 
       policies: this.formBuilder.group({
         id: [undefined],
         billNo: [undefined],
@@ -42,7 +42,7 @@ export class UpdatebillComponent {
         bankName: [undefined],
         policyholder: [undefined],
         address: [undefined],
-        sumInsured: [undefined],
+        sumInsured: [undefined, Validators.required], 
         stockInsured: [undefined],
         interestInsured: [undefined],
         usedAs: [undefined],
@@ -56,6 +56,7 @@ export class UpdatebillComponent {
     this.billForm.get('fire')?.valueChanges.subscribe(() => this.calculatePremiums());
     this.billForm.get('rsd')?.valueChanges.subscribe(() => this.calculatePremiums());
     this.billForm.get('tax')?.valueChanges.subscribe(() => this.calculatePremiums());
+    this.billForm.get('policies.sumInsured')?.valueChanges.subscribe(() => this.calculatePremiums()); // Listen for changes in sumInsured
   }
 
   loadBill(): void {
@@ -107,7 +108,7 @@ export class UpdatebillComponent {
   }
 
   getTotalPremium(sumInsured: number, fireRate: number, rsdRate: number): number {
-    return sumInsured * fireRate + (sumInsured * rsdRate);
+    return (sumInsured * fireRate) + (sumInsured * rsdRate);
   }
 
   getTotalTax(netPremium: number, taxRate: number): number {
@@ -119,22 +120,25 @@ export class UpdatebillComponent {
   }
 
   updateBill(): void {
-    const updateBill: BillModel = {
-      ...this.bill,
-      ...this.billForm.getRawValue() 
-    };
-  
-   
-    this.billService.updateBill(this.billId, updateBill) 
-      .subscribe({
-        next: res => {
-          console.log('Bill updated successfully:', res);
-          this.billForm.reset();
-          this.router.navigate(['viewbill']);
-        },
-        error: error => {
-          console.log('Error updating bill:', error);
-        }
-      });
+    if (this.billForm.valid) {
+      const updateBill: BillModel = {
+        ...this.bill,
+        ...this.billForm.getRawValue()
+      };
+
+      this.billService.updateBill(this.billId, updateBill)
+        .subscribe({
+          next: res => {
+            console.log('Bill updated successfully:', res);
+            this.billForm.reset();
+            this.router.navigate(['viewbill']);
+          },
+          error: error => {
+            console.log('Error updating bill:', error);
+          }
+        });
+    } else {
+      console.warn('Form is invalid');
+    }
   }
 }

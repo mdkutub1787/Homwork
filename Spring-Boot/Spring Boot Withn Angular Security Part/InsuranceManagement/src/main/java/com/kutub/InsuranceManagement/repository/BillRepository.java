@@ -22,4 +22,6 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query("SELECT b FROM Bill b WHERE b.policy.id = :policyId")
     List<Bill> findBillsByPolicyId(@Param("policyId") int policyId);
 
+    
+
 }

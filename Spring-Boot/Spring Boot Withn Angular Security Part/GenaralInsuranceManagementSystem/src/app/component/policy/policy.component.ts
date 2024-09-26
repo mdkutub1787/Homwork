@@ -13,7 +13,7 @@ export class PolicyComponent implements OnInit {
   policy!: PolicyModel[];                
   policies: PolicyModel[] = []; 
   searchTerm: string = '';            
-  sortBy: 'policyholder' | 'bankName' = 'policyholder'; 
+  sortBy: 'policyholder' | 'id' | 'bankName' = 'policyholder'; 
 
   constructor(
     private policyService: PolicyService,
@@ -36,8 +36,8 @@ export class PolicyComponent implements OnInit {
     this.policyService.deletePolicy(id).subscribe({
       next: res => {
         console.log(res);
-        this.reloadPolicy();  
-        this.router.navigate(['viewpolicy']);
+        this.reloadPolicy()
+        this.router.navigate(['/viewpolicy']);
       },
       error: error => {
         console.log(error);
@@ -66,13 +66,16 @@ export class PolicyComponent implements OnInit {
   }
 
   // Filter policies based on search term
-  filterPolicy() {
+  searchPolicy() {
+    const lowerCaseSearchTerm = this.searchTerm.trim().toLowerCase(); 
+  
     this.policies = this.policy.filter(item =>
-      item.policyholder?.toLowerCase().includes(this.searchTerm.toLowerCase())
-      || item.bankName?.toLowerCase().includes(this.searchTerm.toLowerCase())
+      item.policyholder?.toLowerCase().includes(lowerCaseSearchTerm) || 
+      item.bankName?.toLowerCase().includes(lowerCaseSearchTerm) ||      
+      item.id?.toString().includes(lowerCaseSearchTerm)                  
     );
-   
   }
+  
 
 
 }

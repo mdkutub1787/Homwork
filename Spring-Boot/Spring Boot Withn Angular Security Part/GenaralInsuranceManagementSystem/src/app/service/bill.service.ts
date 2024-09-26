@@ -46,10 +46,16 @@ export class BillService {
   //   return this.http.get<PolicyModel[]>(this.baseUrl + "/searchpolicyholder?policyholder=" + policyholder);
   // }
   
-  searchByPolicyHolder(policyholder: string): Observable<PolicyModel[]> {
-    return this.http.get<PolicyModel[]>(`search?policyholder=${policyholder}`);
-  }
-  
+
+    // Filter receipts by policyholder, bankName, or id on the client side
+    searchByPolicyHolderAndBankNameAndId(bill: BillModel[], searchTerm: string): BillModel[] {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      return bill.filter(item =>
+        item.policy.policyholder?.toLowerCase().includes(lowerCaseSearchTerm) ||
+        item.policy.bankName?.toLowerCase().includes(lowerCaseSearchTerm) ||
+        item.policy.id?.toString().includes(lowerCaseSearchTerm)
+      );
+    }
   
   
 }
